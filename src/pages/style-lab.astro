@@ -17,155 +17,215 @@ import '@/styles/global.css';
         <div>
           <p class="eyebrow">Style Lab</p>
           <h1>見た目調整</h1>
-          <p>下のプレビューを見ながら、紫のつまみやスライダーで幅・余白・色を試せます。</p>
+          <p>本番ブログに近いプレビューを見ながら、幅・余白・文字・色を細かく試せます。</p>
         </div>
         <a href="/">ブログへ戻る</a>
       </header>
 
-      <section class="control-panel" aria-label="調整パネル">
-        <label>
-          全体幅
-          <input id="pageRange" type="range" min="980" max="1240" value="1160" />
-          <span><output id="pageValue">1160</output>px</span>
-        </label>
+      <section class="workspace" aria-label="見た目調整ワークスペース">
+        <aside class="panel" aria-label="調整パネル">
+          <div class="panel-block">
+            <h2>幅と余白</h2>
+            <label>
+              <span>ページ全体</span>
+              <input data-key="page" type="range" min="1080" max="1520" step="10" />
+              <output data-value="page"></output>
+            </label>
+            <label>
+              <span>本文</span>
+              <input data-key="main" type="range" min="720" max="1080" step="10" />
+              <output data-value="main"></output>
+            </label>
+            <label>
+              <span>Profile欄</span>
+              <input data-key="sidebar" type="range" min="200" max="320" step="10" />
+              <output data-value="sidebar"></output>
+            </label>
+            <label>
+              <span>本文とProfileの間</span>
+              <input data-key="gap" type="range" min="24" max="120" step="4" />
+              <output data-value="gap"></output>
+            </label>
+            <label>
+              <span>外側の余白</span>
+              <input data-key="sidePadding" type="range" min="0" max="56" step="2" />
+              <output data-value="sidePadding"></output>
+            </label>
+            <label>
+              <span>Profileの下げ幅</span>
+              <input data-key="offset" type="range" min="0" max="80" step="2" />
+              <output data-value="offset"></output>
+            </label>
+          </div>
 
-        <label>
-          本文幅
-          <input id="mainRange" type="range" min="620" max="840" value="740" />
-          <span><output id="mainValue">740</output>px</span>
-        </label>
+          <div class="panel-block">
+            <h2>文字</h2>
+            <label>
+              <span>本文サイズ</span>
+              <input data-key="font" type="range" min="15" max="20" step="0.5" />
+              <output data-value="font"></output>
+            </label>
+            <label>
+              <span>行間</span>
+              <input data-key="lineHeight" type="range" min="1.55" max="2.15" step="0.05" />
+              <output data-value="lineHeight"></output>
+            </label>
+            <label>
+              <span>タイトルサイズ</span>
+              <input data-key="titleSize" type="range" min="30" max="58" step="1" />
+              <output data-value="titleSize"></output>
+            </label>
+          </div>
 
-        <label>
-          サイドバー幅
-          <input id="sidebarRange" type="range" min="220" max="340" value="260" />
-          <span><output id="sidebarValue">260</output>px</span>
-        </label>
+          <div class="panel-block color-grid">
+            <h2>色</h2>
+            <label>
+              <span>背景</span>
+              <input data-key="background" type="color" />
+            </label>
+            <label>
+              <span>文字</span>
+              <input data-key="text" type="color" />
+            </label>
+            <label>
+              <span>アクセント</span>
+              <input data-key="link" type="color" />
+            </label>
+            <label>
+              <span>薄い文字</span>
+              <input data-key="muted" type="color" />
+            </label>
+            <label>
+              <span>線</span>
+              <input data-key="border" type="color" />
+            </label>
+          </div>
 
-        <label>
-          間隔
-          <input id="gapRange" type="range" min="32" max="96" value="56" />
-          <span><output id="gapValue">56</output>px</span>
-        </label>
-
-        <label>
-          サイドバーの下げ幅
-          <input id="offsetRange" type="range" min="0" max="64" value="18" />
-          <span><output id="offsetValue">18</output>px</span>
-        </label>
-
-        <label>
-          文字サイズ
-          <input id="fontRange" type="range" min="16" max="19" value="17" step="0.5" />
-          <span><output id="fontValue">17</output>px</span>
-        </label>
-
-        <label>
-          アクセント色
-          <input id="linkColor" type="color" value="#5a4a78" />
-        </label>
-      </section>
-
-      <section class="preview-area" aria-label="ブログの見た目プレビュー">
-        <div class="preview-toolbar">
-          <p>
-            <strong>ドラッグ:</strong>
-            本文とサイドバーの境目を動かすと、片方が広がり、もう片方が狭くなります。右端を動かすと全体幅が変わります。
-          </p>
-        </div>
-
-        <div class="preview-canvas">
-          <div class="mock-page" id="mockPage">
-            <div class="mock-header">
-              <strong>風呂は命の洗濯</strong>
-              <span>Literature, Phenomenology &amp; Criticism</span>
+          <div class="panel-block">
+            <h2>形</h2>
+            <div class="button-row">
+              <button type="button" data-preset="wide">本文広め</button>
+              <button type="button" data-preset="calm">落ち着き</button>
+              <button type="button" data-preset="compact">余白少なめ</button>
             </div>
+            <button type="button" class="ghost-button" id="resetButton">最初に戻す</button>
+          </div>
+        </aside>
 
-            <div class="mock-layout">
-              <article class="mock-main">
-                <p class="mock-meta">2026年6月1日 / 読書メモ</p>
-                <h2>本文エリア</h2>
-                <p>
-                  ここが記事本文です。日本語の長文を読んだときに、横幅が広すぎないか、狭すぎないかを見ます。
-                  右側の欄との距離も、読み心地にかなり影響します。
-                </p>
-                <p>
-                  境目の紫のつまみを左右に動かすと、本文とサイドバーの幅が連動して変わります。
-                  右端のつまみを動かすと、ページ全体の幅が変わります。
-                </p>
-                <blockquote>引用や補足が入ったときの見え方も、この幅で確認できます。</blockquote>
-              </article>
-
-              <div class="divider-handle" id="dividerHandle" role="separator" aria-label="本文とサイドバーの境目を調整">
-                <span>境目</span>
-              </div>
-
-              <aside class="mock-sidebar">
-                <section>
-                  <h2>Profile</h2>
-                  <p>さもの</p>
-                  <p>文学・哲学・批評理論についての読書メモと短い試論。</p>
-                </section>
-                <section>
-                  <h2>Recent Entries</h2>
-                  <p>このブログについて</p>
-                  <p>読書メモの表示サンプル</p>
-                </section>
-                <section>
-                  <h2>Categories</h2>
-                  <p>読書メモ / 雑記</p>
-                </section>
-              </aside>
+        <section class="preview-section" aria-label="プレビュー">
+          <div class="preview-topbar">
+            <div>
+              <strong>プレビュー</strong>
+              <span>紫のつまみをドラッグできます</span>
             </div>
-
-            <div class="page-handle" id="pageHandle" role="separator" aria-label="ページ全体の幅を調整">
-              <span>全体幅</span>
+            <div class="metrics">
+              <span>本文 <output data-value="main"></output></span>
+              <span>Profile <output data-value="sidebar"></output></span>
+              <span>間 <output data-value="gap"></output></span>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section class="readout" aria-label="反映用の値">
-        <div>
-          <h2>この値を反映する</h2>
-          <p>気に入ったら、下の内容をそのまま送ってください。</p>
-        </div>
-        <textarea id="cssOutput" readonly></textarea>
-        <button type="button" id="copyButton">コピー</button>
+          <div class="preview-canvas" id="previewCanvas">
+            <div class="mock-page" id="mockPage">
+              <header class="mock-site-header">
+                <a class="mock-title" href="#">風呂は命の洗濯</a>
+                <p>Literature, Phenomenology &amp; Criticism</p>
+                <nav>
+                  <a href="#">Home</a>
+                  <a href="#">Archive</a>
+                  <a href="#">Categories</a>
+                  <a href="#">About</a>
+                  <a href="#">RSS</a>
+                </nav>
+              </header>
+
+              <main class="mock-grid">
+                <article class="mock-main">
+                  <h1>読書メモの表示サンプル</h1>
+                  <p class="mock-meta">2026年5月31日 / 読書メモ</p>
+                  <p>
+                    ここが記事本文です。日本語の長文を読んだときに、横幅が広すぎないか、狭すぎないかを確認できます。
+                    本文の幅、行間、サイドバーとの距離が合うと、読むときの圧迫感がかなり減ります。
+                  </p>
+                  <p>
+                    右の Profile 欄を脇に逃がしたいときは、本文幅を広げつつ、Profile 欄を少し細くし、間隔を広げるのが効きます。
+                    外側の余白は、ページ全体が画面の端へどれくらい近づくかを決めます。
+                  </p>
+                  <h2>小見出し</h2>
+                  <p>
+                    見出し、本文、引用、表の雰囲気を同時に見られるようにしています。
+                    気に入った値ができたら、下の「反映用の値」をそのまま送ってください。
+                  </p>
+                  <blockquote>引用や補足が入ったときの見え方も、この幅で確認できます。</blockquote>
+                </article>
+
+                <div class="divider-handle" id="dividerHandle" role="separator" aria-label="本文とProfile欄の境目を調整">
+                  <span>境目</span>
+                </div>
+
+                <aside class="mock-sidebar">
+                  <section>
+                    <h2>Profile</h2>
+                    <p><strong>さもの</strong></p>
+                    <p>文学・哲学・批評理論についての読書メモと短い試論。</p>
+                  </section>
+                  <section>
+                    <h2>Recent Entries</h2>
+                    <p>このブログについて</p>
+                    <p>読書メモの表示サンプル</p>
+                  </section>
+                  <section>
+                    <h2>Categories</h2>
+                    <p>読書メモ (1)</p>
+                    <p>雑記 (1)</p>
+                  </section>
+                </aside>
+              </main>
+
+              <div class="page-handle" id="pageHandle" role="separator" aria-label="ページ全体の幅を調整">
+                <span>全体幅</span>
+              </div>
+            </div>
+          </div>
+
+          <section class="readout" aria-label="反映用の値">
+            <div>
+              <h2>反映用の値</h2>
+              <p>気に入ったら、この内容をそのまま送ってください。</p>
+            </div>
+            <textarea id="cssOutput" readonly></textarea>
+            <button type="button" id="copyButton">コピー</button>
+          </section>
+        </section>
       </section>
     </main>
 
     <script>
       // @ts-nocheck
-      const state = {
-        page: 1160,
-        main: 740,
-        sidebar: 260,
-        gap: 56,
+      const initial = {
+        page: 1340,
+        main: 940,
+        sidebar: 240,
+        gap: 64,
+        sidePadding: 12,
         offset: 18,
         font: 17,
+        lineHeight: 1.9,
+        titleSize: 40,
+        background: '#fdfcf9',
+        text: '#1f1f1f',
+        muted: '#6b6760',
         link: '#5a4a78',
+        border: '#dedbd4',
       };
-
-      const ids = [
-        'pageRange',
-        'mainRange',
-        'sidebarRange',
-        'gapRange',
-        'offsetRange',
-        'fontRange',
-        'linkColor',
-        'pageValue',
-        'mainValue',
-        'sidebarValue',
-        'gapValue',
-        'offsetValue',
-        'fontValue',
-        'cssOutput',
-        'copyButton',
-        'dividerHandle',
-        'pageHandle',
-      ];
-      const el = Object.fromEntries(ids.map((id) => [id, document.querySelector(`#${id}`)]));
+      const state = { ...initial };
+      const ranges = document.querySelectorAll('input[data-key]');
+      const outputs = document.querySelectorAll('output[data-value]');
+      const cssOutput = document.querySelector('#cssOutput');
+      const copyButton = document.querySelector('#copyButton');
+      const resetButton = document.querySelector('#resetButton');
+      const dividerHandle = document.querySelector('#dividerHandle');
+      const pageHandle = document.querySelector('#pageHandle');
 
       function clamp(value, min, max) {
         return Math.max(min, Math.min(max, value));
@@ -174,107 +234,107 @@ import '@/styles/global.css';
       function darken(hex) {
         const color = hex.replace('#', '');
         const parts = [0, 2, 4].map((start) => parseInt(color.slice(start, start + 2), 16));
-        return `#${parts.map((part) => clamp(part - 28, 0, 255).toString(16).padStart(2, '0')).join('')}`;
+        return `#${parts.map((part) => clamp(part - 30, 0, 255).toString(16).padStart(2, '0')).join('')}`;
       }
 
-      function fitWidths(preferred = 'main') {
-        const available = state.page - state.gap;
-        const minMain = 620;
-        const minSidebar = 220;
-        const maxMain = 840;
-        const maxSidebar = 340;
-
-        state.main = clamp(state.main, minMain, maxMain);
-        state.sidebar = clamp(state.sidebar, minSidebar, maxSidebar);
-
-        if (state.main + state.sidebar !== available) {
-          if (preferred === 'sidebar') {
-            state.main = available - state.sidebar;
-            state.main = clamp(state.main, minMain, maxMain);
-            state.sidebar = available - state.main;
-          } else {
-            state.sidebar = available - state.main;
-            state.sidebar = clamp(state.sidebar, minSidebar, maxSidebar);
-            state.main = available - state.sidebar;
-          }
-        }
-
-        state.main = Math.round(state.main);
-        state.sidebar = Math.round(state.sidebar);
+      function syncInputs() {
+        ranges.forEach((input) => {
+          input.value = state[input.dataset.key];
+        });
       }
 
-      function setRangeValues() {
-        el.pageRange.value = state.page;
-        el.mainRange.value = state.main;
-        el.sidebarRange.value = state.sidebar;
-        el.gapRange.value = state.gap;
-        el.offsetRange.value = state.offset;
-        el.fontRange.value = state.font;
-        el.linkColor.value = state.link;
+      function syncOutputs() {
+        outputs.forEach((output) => {
+          const value = state[output.dataset.value];
+          output.textContent = typeof value === 'number' ? `${value}px` : value;
+          if (output.dataset.value === 'lineHeight') output.textContent = value;
+        });
       }
 
-      function applyState(preferred = 'main') {
-        fitWidths(preferred);
-        setRangeValues();
-        document.documentElement.style.setProperty('--lab-page-width', `${state.page}px`);
-        document.documentElement.style.setProperty('--lab-main-width', `${state.main}px`);
-        document.documentElement.style.setProperty('--lab-sidebar-width', `${state.sidebar}px`);
-        document.documentElement.style.setProperty('--lab-gap', `${state.gap}px`);
-        document.documentElement.style.setProperty('--lab-offset', `${state.offset}px`);
-        document.documentElement.style.setProperty('--blog-font-size', `${state.font}px`);
-        document.documentElement.style.setProperty('--blog-link', state.link);
-        document.documentElement.style.setProperty('--blog-link-hover', darken(state.link));
-
-        el.pageValue.textContent = state.page;
-        el.mainValue.textContent = state.main;
-        el.sidebarValue.textContent = state.sidebar;
-        el.gapValue.textContent = state.gap;
-        el.offsetValue.textContent = state.offset;
-        el.fontValue.textContent = state.font;
-        el.cssOutput.value = [
+      function applyState() {
+        const root = document.documentElement;
+        root.style.setProperty('--lab-page-width', `${state.page}px`);
+        root.style.setProperty('--lab-main-width', `${state.main}px`);
+        root.style.setProperty('--lab-sidebar-width', `${state.sidebar}px`);
+        root.style.setProperty('--lab-gap', `${state.gap}px`);
+        root.style.setProperty('--lab-side-padding', `${state.sidePadding}px`);
+        root.style.setProperty('--lab-offset', `${state.offset}px`);
+        root.style.setProperty('--blog-font-size', `${state.font}px`);
+        root.style.setProperty('--blog-line-height', state.lineHeight);
+        root.style.setProperty('--lab-title-size', `${state.titleSize}px`);
+        root.style.setProperty('--blog-background', state.background);
+        root.style.setProperty('--blog-text', state.text);
+        root.style.setProperty('--blog-muted-text', state.muted);
+        root.style.setProperty('--blog-link', state.link);
+        root.style.setProperty('--blog-link-hover', darken(state.link));
+        root.style.setProperty('--blog-border', state.border);
+        syncInputs();
+        syncOutputs();
+        cssOutput.value = [
+          `--blog-background: ${state.background};`,
+          `--blog-text: ${state.text};`,
+          `--blog-muted-text: ${state.muted};`,
           `--blog-link: ${state.link};`,
           `--blog-link-hover: ${darken(state.link)};`,
+          `--blog-border: ${state.border};`,
+          `--blog-font-size: ${state.font}px;`,
+          `--blog-line-height: ${state.lineHeight};`,
           `--blog-page-width: ${state.page}px;`,
           `--blog-main-width: ${state.main}px;`,
           `--blog-sidebar-width: ${state.sidebar}px;`,
           `--blog-column-gap: ${state.gap}px;`,
           `--blog-sidebar-offset: ${state.offset}px;`,
-          `--blog-font-size: ${state.font}px;`,
+          `--blog-side-padding: ${state.sidePadding}px;`,
         ].join('\n');
       }
 
-      function dragDivider(event) {
+      function updateFromInput(input) {
+        const key = input.dataset.key;
+        state[key] = input.type === 'color' ? input.value : Number(input.value);
+        applyState();
+      }
+
+      function setPreset(name) {
+        if (name === 'wide') {
+          Object.assign(state, { page: 1420, main: 1020, sidebar: 220, gap: 76, sidePadding: 8 });
+        }
+        if (name === 'calm') {
+          Object.assign(state, { page: 1240, main: 820, sidebar: 260, gap: 64, sidePadding: 28, font: 17, lineHeight: 1.9 });
+        }
+        if (name === 'compact') {
+          Object.assign(state, { page: 1320, main: 940, sidebar: 230, gap: 48, sidePadding: 6 });
+        }
+        applyState();
+      }
+
+      function startDividerDrag(event) {
         event.preventDefault();
         const startX = event.clientX;
         const startMain = state.main;
         const startSidebar = state.sidebar;
-
         function move(moveEvent) {
           const delta = moveEvent.clientX - startX;
-          state.main = clamp(startMain + delta, 620, 840);
-          state.sidebar = clamp(startSidebar - delta, 220, 340);
-          state.page = state.main + state.sidebar + state.gap;
-          applyState('main');
+          state.main = clamp(Math.round(startMain + delta), 720, 1080);
+          state.sidebar = clamp(Math.round(startSidebar - delta), 200, 320);
+          state.page = state.main + state.sidebar + state.gap + 52;
+          applyState();
         }
-
-        stopOnPointerUp(move);
+        attachDrag(move);
       }
 
-      function dragPage(event) {
+      function startPageDrag(event) {
         event.preventDefault();
         const startX = event.clientX;
         const startPage = state.page;
-
         function move(moveEvent) {
           const delta = moveEvent.clientX - startX;
-          state.page = clamp(startPage + delta, 980, 1240);
-          applyState('main');
+          state.page = clamp(Math.round(startPage + delta), 1080, 1520);
+          applyState();
         }
-
-        stopOnPointerUp(move);
+        attachDrag(move);
       }
 
-      function stopOnPointerUp(move) {
+      function attachDrag(move) {
         function up() {
           window.removeEventListener('pointermove', move);
           window.removeEventListener('pointerup', up);
@@ -283,48 +343,25 @@ import '@/styles/global.css';
         window.addEventListener('pointerup', up);
       }
 
-      el.pageRange.addEventListener('input', () => {
-        state.page = Number(el.pageRange.value);
-        applyState('main');
+      ranges.forEach((input) => input.addEventListener('input', () => updateFromInput(input)));
+      document.querySelectorAll('[data-preset]').forEach((button) => {
+        button.addEventListener('click', () => setPreset(button.dataset.preset));
       });
-      el.mainRange.addEventListener('input', () => {
-        state.main = Number(el.mainRange.value);
-        state.page = state.main + state.sidebar + state.gap;
-        applyState('main');
+      resetButton.addEventListener('click', () => {
+        Object.assign(state, initial);
+        applyState();
       });
-      el.sidebarRange.addEventListener('input', () => {
-        state.sidebar = Number(el.sidebarRange.value);
-        state.page = state.main + state.sidebar + state.gap;
-        applyState('sidebar');
-      });
-      el.gapRange.addEventListener('input', () => {
-        state.gap = Number(el.gapRange.value);
-        state.page = state.main + state.sidebar + state.gap;
-        applyState('main');
-      });
-      el.offsetRange.addEventListener('input', () => {
-        state.offset = Number(el.offsetRange.value);
-        applyState('main');
-      });
-      el.fontRange.addEventListener('input', () => {
-        state.font = Number(el.fontRange.value);
-        applyState('main');
-      });
-      el.linkColor.addEventListener('input', () => {
-        state.link = el.linkColor.value;
-        applyState('main');
-      });
-      el.dividerHandle.addEventListener('pointerdown', dragDivider);
-      el.pageHandle.addEventListener('pointerdown', dragPage);
-      el.copyButton.addEventListener('click', async () => {
-        await navigator.clipboard.writeText(el.cssOutput.value);
-        el.copyButton.textContent = 'コピーしました';
-        window.setTimeout(() => {
-          el.copyButton.textContent = 'コピー';
+      dividerHandle.addEventListener('pointerdown', startDividerDrag);
+      pageHandle.addEventListener('pointerdown', startPageDrag);
+      copyButton.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(cssOutput.value);
+        copyButton.textContent = 'コピーしました';
+        setTimeout(() => {
+          copyButton.textContent = 'コピー';
         }, 1200);
       });
 
-      applyState('main');
+      applyState();
     </script>
   </body>
 </html>
@@ -335,9 +372,9 @@ import '@/styles/global.css';
   }
 
   .lab-shell {
-    width: min(1360px, calc(100% - 40px));
+    width: min(1500px, calc(100% - 24px));
     margin: 0 auto;
-    padding: 1.5rem 0 3rem;
+    padding: 1.2rem 0 3rem;
   }
 
   .lab-header {
@@ -368,66 +405,125 @@ import '@/styles/global.css';
     color: var(--blog-muted-text);
   }
 
-  .control-panel,
-  .preview-area,
+  .workspace {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .panel,
+  .preview-section,
   .readout {
     border: 1px solid var(--blog-border);
     background: var(--blog-surface);
   }
 
-  .control-panel {
+  .panel {
     position: sticky;
-    top: 0;
-    z-index: 3;
-    display: grid;
-    grid-template-columns: repeat(7, minmax(130px, 1fr));
-    gap: 0.85rem;
-    padding: 0.9rem;
-    box-shadow: 0 8px 20px rgba(31, 31, 31, 0.06);
+    top: 12px;
+    max-height: calc(100vh - 24px);
+    overflow: auto;
+    padding: 1rem;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 0.86rem;
+    font-size: 0.9rem;
+  }
+
+  .panel-block + .panel-block {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--blog-border);
+  }
+
+  .panel h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
   }
 
   label {
     display: grid;
-    gap: 0.35rem;
+    grid-template-columns: 1fr auto;
+    gap: 0.35rem 0.65rem;
+    align-items: center;
+    margin-bottom: 0.8rem;
   }
 
-  input[type='range'] {
+  label input[type='range'] {
+    grid-column: 1 / -1;
     width: 100%;
   }
 
   input[type='color'] {
-    width: 100%;
-    height: 38px;
+    width: 74px;
+    height: 34px;
     border: 1px solid var(--blog-border);
     background: var(--blog-surface);
   }
 
   output {
+    min-width: 54px;
     color: var(--blog-link);
     font-weight: 700;
+    text-align: right;
   }
 
-  .preview-area {
-    margin-top: 1rem;
+  .color-grid label {
+    grid-template-columns: 1fr auto;
   }
 
-  .preview-toolbar {
-    padding: 0.7rem 1rem;
+  .button-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .button-row button:first-child {
+    grid-column: 1 / -1;
+  }
+
+  button {
+    border: 1px solid var(--blog-link);
+    padding: 0.6rem 0.75rem;
+    background: var(--blog-link);
+    color: white;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .ghost-button {
+    width: 100%;
+    margin-top: 0.6rem;
+    background: transparent;
+    color: var(--blog-link);
+  }
+
+  .preview-section {
+    min-width: 0;
+  }
+
+  .preview-topbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--blog-border);
-    color: var(--blog-muted-text);
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 0.9rem;
   }
 
-  .preview-toolbar p {
-    margin: 0;
+  .preview-topbar span {
+    color: var(--blog-muted-text);
+  }
+
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
   }
 
   .preview-canvas {
-    overflow-x: auto;
-    padding: 32px 48px 42px;
+    overflow: auto;
+    padding: 26px;
     background:
       linear-gradient(90deg, rgba(90, 74, 120, 0.08) 1px, transparent 1px),
       linear-gradient(180deg, rgba(90, 74, 120, 0.08) 1px, transparent 1px);
@@ -435,70 +531,78 @@ import '@/styles/global.css';
   }
 
   .mock-page {
-    --lab-page-width: 1160px;
-    --lab-main-width: 740px;
-    --lab-sidebar-width: 260px;
-    --lab-gap: 56px;
+    --lab-page-width: 1340px;
+    --lab-main-width: 940px;
+    --lab-sidebar-width: 240px;
+    --lab-gap: 64px;
+    --lab-side-padding: 12px;
     --lab-offset: 18px;
+    --lab-title-size: 40px;
     position: relative;
     width: var(--lab-page-width);
-    min-width: 920px;
+    min-width: 980px;
     margin: 0 auto;
-    padding: 26px;
+    padding: 0 var(--lab-side-padding) 28px;
     border: 2px solid color-mix(in srgb, var(--blog-link) 42%, var(--blog-border));
     background: var(--blog-background);
     box-shadow: 0 16px 40px rgba(31, 31, 31, 0.09);
   }
 
-  .mock-header {
-    margin-bottom: 22px;
-    padding-bottom: 16px;
+  .mock-site-header {
+    padding: 28px 0 18px;
     border-bottom: 1px solid var(--blog-border);
   }
 
-  .mock-header strong {
+  .mock-title {
     display: block;
-    font-size: 2rem;
+    color: var(--blog-text);
+    font-size: var(--lab-title-size);
+    font-weight: 700;
     line-height: 1.2;
+    text-decoration: none;
   }
 
-  .mock-header span {
+  .mock-site-header p {
+    margin: 0.35rem 0 1rem;
     color: var(--blog-muted-text);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.95rem;
+  }
+
+  .mock-site-header nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 0.9rem;
   }
 
-  .mock-layout {
+  .mock-grid {
     position: relative;
     display: grid;
     grid-template-columns: var(--lab-main-width) var(--lab-sidebar-width);
     gap: var(--lab-gap);
     align-items: start;
+    padding-top: 2.2rem;
   }
 
-  .mock-main,
-  .mock-sidebar {
-    min-height: 390px;
-    background: var(--blog-background);
-  }
-
-  .mock-main {
-    padding: 0;
+  .mock-main h1 {
+    margin: 0 0 0.9rem;
+    font-size: 2rem;
   }
 
   .mock-main h2 {
-    margin: 0.2rem 0 1rem;
+    margin: 2rem 0 0.8rem;
     padding-bottom: 0.25rem;
     border-bottom: 1px solid var(--blog-border);
     font-size: 1.45rem;
   }
 
-  .mock-main blockquote {
-    margin-bottom: 0;
+  .mock-main p {
+    margin: 1rem 0;
   }
 
   .mock-meta {
-    margin: 0;
     color: var(--blog-muted-text);
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 0.85rem;
@@ -546,31 +650,31 @@ import '@/styles/global.css';
   }
 
   .divider-handle {
-    top: 74px;
-    bottom: 42px;
-    left: calc(var(--lab-main-width) + (var(--lab-gap) / 2) - 12px);
-    width: 24px;
+    top: 40px;
+    bottom: 22px;
+    left: calc(var(--lab-main-width) + (var(--lab-gap) / 2) - 13px);
+    width: 26px;
+  }
+
+  .divider-handle span,
+  .page-handle span {
+    writing-mode: vertical-rl;
   }
 
   .page-handle {
     top: 50%;
     right: -13px;
     width: 26px;
-    height: 170px;
+    height: 190px;
     transform: translateY(-50%);
-    writing-mode: vertical-rl;
-  }
-
-  .divider-handle span {
-    writing-mode: vertical-rl;
   }
 
   .readout {
     display: grid;
-    grid-template-columns: 260px 1fr 120px;
+    grid-template-columns: 220px 1fr 110px;
     gap: 1rem;
     align-items: center;
-    margin-top: 1rem;
+    margin: 1rem;
     padding: 1rem;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   }
@@ -588,7 +692,7 @@ import '@/styles/global.css';
 
   textarea {
     width: 100%;
-    min-height: 118px;
+    min-height: 130px;
     resize: vertical;
     border: 1px solid var(--blog-border);
     padding: 0.75rem;
@@ -597,19 +701,15 @@ import '@/styles/global.css';
     font: 0.82rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
 
-  button {
-    border: 1px solid var(--blog-link);
-    padding: 0.65rem 0.9rem;
-    background: var(--blog-link);
-    color: white;
-    font: inherit;
-    cursor: pointer;
-  }
+  @media (max-width: 1100px) {
+    .workspace {
+      display: block;
+    }
 
-  @media (max-width: 1050px) {
-    .control-panel {
-      grid-template-columns: repeat(2, minmax(130px, 1fr));
+    .panel {
       position: static;
+      max-height: none;
+      margin-bottom: 1rem;
     }
 
     .readout {
@@ -617,11 +717,11 @@ import '@/styles/global.css';
     }
 
     textarea,
-    button {
+    .readout button {
       margin-top: 0.75rem;
     }
 
-    button {
+    .readout button {
       width: 100%;
     }
   }
