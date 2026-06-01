@@ -86,6 +86,16 @@ npm run preview
 9. `git status` で余計なファイルが含まれていないか確認する。
 10. commit / push する。
 
+記事を書くときは、`templates/post-template.md` をコピーして使えます。コピー先は `src/content/posts/` です。コピーしたファイル名は、英数字とハイフンだけにしてください。
+
+例:
+
+```text
+templates/post-template.md
+↓ コピー
+src/content/posts/phenomenology-reading-note.md
+```
+
 frontmatter の例:
 
 ```yaml
