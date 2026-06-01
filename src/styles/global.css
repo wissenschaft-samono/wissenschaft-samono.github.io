@@ -18,9 +18,10 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: ui-serif, 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif JP', Georgia, serif;
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'YuGothic', 'Noto Sans JP', system-ui, sans-serif;
   font-size: var(--blog-font-size);
   line-height: var(--blog-line-height);
+  font-weight: 400;
 }
 
 a {
