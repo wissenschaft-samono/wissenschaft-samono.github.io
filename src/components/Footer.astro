@@ -1,0 +1,24 @@
+---
+import { SITE } from '@/site.config';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-shell">
+    <p>&copy; {year} {SITE.author}. <a href="/rss.xml">RSS</a></p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.88rem;
+  }
+
+  p {
+    margin: 0;
+    padding: 1.4rem 0 2rem;
+  }
+</style>

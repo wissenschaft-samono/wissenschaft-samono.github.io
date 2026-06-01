@@ -1,0 +1,168 @@
+:root {
+  color-scheme: light;
+  --bg: #fdfcf9;
+  --text: #1f1f1f;
+  --muted: #6b6760;
+  --line: #dedbd4;
+  --accent: #245c83;
+  --accent-dark: #173c55;
+  --surface: #ffffff;
+  --code-bg: #f3f1eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-serif, 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif JP', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--accent-dark);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(36, 92, 131, 0.35);
+  outline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+code,
+pre,
+kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+code {
+  background: var(--code-bg);
+  border-radius: 4px;
+  padding: 0.12em 0.28em;
+  font-size: 0.9em;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1rem;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  line-height: 1.65;
+}
+
+pre code {
+  padding: 0;
+  background: transparent;
+}
+
+blockquote {
+  margin: 1.7rem 0;
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 4px solid var(--line);
+  color: #373530;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  border: 1px solid var(--line);
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.4rem 0;
+}
+
+.site-shell {
+  width: min(1080px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.site-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 680px) 260px;
+  gap: 48px;
+  align-items: start;
+  padding: 2.2rem 0 3rem;
+}
+
+.content-column {
+  min-width: 0;
+}
+
+.page-title {
+  margin: 0 0 1.4rem;
+  font-size: clamp(1.55rem, 4vw, 2.1rem);
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  line-height: 1.45;
+  margin: 2.2rem 0 0.8rem;
+}
+
+.prose h2 {
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.45rem;
+}
+
+.prose h3 {
+  font-size: 1.2rem;
+}
+
+.prose h4 {
+  font-size: 1.05rem;
+}
+
+.prose p {
+  margin: 1rem 0;
+}
+
+@media (max-width: 899px) {
+  body {
+    font-size: 16px;
+  }
+
+  .site-shell {
+    width: min(100% - 28px, 680px);
+  }
+
+  .site-grid {
+    display: block;
+    padding-top: 1.4rem;
+  }
+}

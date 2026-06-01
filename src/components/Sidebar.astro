@@ -1,0 +1,95 @@
+---
+import { SITE } from '@/site.config';
+import { categoryPath, formatDate, getArchiveYears, getCategories, getRecentPosts } from '@/lib/posts';
+
+const recentPosts = await getRecentPosts(10);
+const categories = await getCategories();
+const archiveYears = getArchiveYears(recentPosts);
+---
+
+<aside class="sidebar" aria-label="サイドバー">
+  <section>
+    <h2>Profile</h2>
+    <p><strong>{SITE.author}</strong></p>
+    <p>{SITE.description}</p>
+    <p><a href="/about/">About this site</a></p>
+  </section>
+
+  <section>
+    <h2>Recent Entries</h2>
+    <ol>
+      {recentPosts.map((post) => (
+        <li>
+          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+          <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section>
+    <h2>Categories</h2>
+    <ul>
+      {categories.map((category) => (
+        <li><a href={categoryPath(category.name)}>{category.name}</a> <span>({category.count})</span></li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Archive</h2>
+    <ul>
+      {archiveYears.map(([year]) => <li><a href="/archive/">{year}</a></li>)}
+    </ul>
+  </section>
+</aside>
+
+<style>
+  .sidebar {
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  section {
+    padding: 0 0 1.4rem;
+    margin: 0 0 1.4rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h2 {
+    margin: 0 0 0.55rem;
+    color: var(--text);
+    font-size: 0.95rem;
+    letter-spacing: 0;
+  }
+
+  p {
+    margin: 0.35rem 0;
+  }
+
+  ul,
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin: 0.35rem 0;
+  }
+
+  time {
+    display: block;
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 899px) {
+    .sidebar {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

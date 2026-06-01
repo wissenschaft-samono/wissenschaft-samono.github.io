@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostList from '@/components/PostList.astro';
+import { getAllPosts, getCategories } from '@/lib/posts';
+
+export async function getStaticPaths() {
+  const categories = await getCategories();
+  return categories.map((category) => ({
+    params: { category: category.name },
+    props: { category: category.name },
+  }));
+}
+
+const { category } = Astro.props;
+const posts = (await getAllPosts()).filter((post) => post.data.category === category);
+---
+
+<BaseLayout title={`Category: ${category}`}>
+  <h1 class="page-title">{category}</h1>
+  <PostList posts={posts} />
+</BaseLayout>

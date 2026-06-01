@@ -1,0 +1,42 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { categoryPath, getCategories } from '@/lib/posts';
+
+const categories = await getCategories();
+---
+
+<BaseLayout title="Categories">
+  <h1 class="page-title">Categories</h1>
+  <ul class="categories">
+    {categories.map((category) => (
+      <li>
+        <a href={categoryPath(category.name)}>{category.name}</a>
+        <span>{category.count}件</span>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  .categories {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  span {
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.9rem;
+  }
+</style>

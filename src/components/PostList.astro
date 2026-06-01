@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostMeta from './PostMeta.astro';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<div class="post-list">
+  {posts.map((post) => (
+    <article>
+      <h2><a href={`/posts/${post.id}/`}>{post.data.title}</a></h2>
+      <PostMeta post={post} />
+      <p>{post.data.description}</p>
+    </article>
+  ))}
+</div>
+
+<style>
+  .post-list {
+    display: grid;
+    gap: 1.7rem;
+  }
+
+  article {
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    line-height: 1.45;
+    letter-spacing: 0;
+  }
+
+  h2 a {
+    color: var(--text);
+  }
+
+  p {
+    margin: 0.55rem 0 0;
+  }
+</style>

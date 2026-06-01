@@ -1,0 +1,59 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { categoryPath, formatDate } from '@/lib/posts';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+---
+
+<p class="post-meta">
+  <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>
+  <span aria-hidden="true">/</span>
+  <a href={categoryPath(post.data.category)}>{post.data.category}</a>
+  {post.data.updatedAt && (
+    <>
+      <span aria-hidden="true">/</span>
+      <span>更新: <time datetime={post.data.updatedAt.toISOString()}>{formatDate(post.data.updatedAt)}</time></span>
+    </>
+  )}
+</p>
+{post.data.tags.length > 0 && (
+  <ul class="tags" aria-label="タグ">
+    {post.data.tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+)}
+
+<style>
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.55rem;
+    margin: 0.2rem 0 0.55rem;
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.4rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.8rem;
+  }
+
+  .tags li {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.05rem 0.45rem;
+    color: var(--muted);
+    background: var(--surface);
+  }
+</style>
