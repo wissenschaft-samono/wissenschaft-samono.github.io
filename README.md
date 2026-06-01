@@ -31,6 +31,25 @@ Astro と Markdown で作る公開研究ブログです。GitHub Pages の無料
 - `src/pages/about.astro`
   - `CONTACT_LINK_PLACEHOLDER`
 
+## 見た目を変える
+
+外観は、まず `src/styles/theme.css` を編集してください。背景色、文字色、本文サイズ、行間、ページ幅、サイドバー幅などを一箇所で変えられます。
+
+例:
+
+```css
+/* 本文の大きさ */
+--blog-font-size: 17px;
+
+/* 本文の行間 */
+--blog-line-height: 1.9;
+
+/* リンクの色 */
+--blog-link: #245c83;
+```
+
+色は `#fdfcf9` のような文字で表します。数字を少し変えるだけでも印象が変わるので、最初は本文サイズ、行間、背景色から触るのがおすすめです。
+
 ユーザーサイトとして公開する場合、リポジトリ名は `<github-user>.github.io` にします。プロジェクトサイトとして公開する場合、`repositoryName` を `research-blog` などに変更すると、Astro の `base` が `/research-blog` になります。
 
 ## ローカル確認

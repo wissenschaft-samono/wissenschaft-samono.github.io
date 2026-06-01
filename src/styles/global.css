@@ -1,13 +1,13 @@
 :root {
   color-scheme: light;
-  --bg: #fdfcf9;
-  --text: #1f1f1f;
-  --muted: #6b6760;
-  --line: #dedbd4;
-  --accent: #245c83;
-  --accent-dark: #173c55;
-  --surface: #ffffff;
-  --code-bg: #f3f1eb;
+  --bg: var(--blog-background);
+  --text: var(--blog-text);
+  --muted: var(--blog-muted-text);
+  --line: var(--blog-border);
+  --accent: var(--blog-link);
+  --accent-dark: var(--blog-link-hover);
+  --surface: var(--blog-surface);
+  --code-bg: var(--blog-code-background);
 }
 
 * {
@@ -19,8 +19,8 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: ui-serif, 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif JP', Georgia, serif;
-  font-size: 17px;
-  line-height: 1.9;
+  font-size: var(--blog-font-size);
+  line-height: var(--blog-line-height);
 }
 
 a {
@@ -35,7 +35,7 @@ a:focus-visible {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(36, 92, 131, 0.35);
+  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
   outline-offset: 3px;
 }
 
@@ -100,14 +100,14 @@ hr {
 }
 
 .site-shell {
-  width: min(1080px, calc(100% - 40px));
+  width: min(var(--blog-page-width), calc(100% - var(--blog-side-padding)));
   margin: 0 auto;
 }
 
 .site-grid {
   display: grid;
-  grid-template-columns: minmax(0, 680px) 260px;
-  gap: 48px;
+  grid-template-columns: minmax(0, var(--blog-main-width)) var(--blog-sidebar-width);
+  gap: var(--blog-column-gap);
   align-items: start;
   padding: 2.2rem 0 3rem;
 }
@@ -154,11 +154,11 @@ hr {
 
 @media (max-width: 899px) {
   body {
-    font-size: 16px;
+    font-size: var(--blog-mobile-font-size);
   }
 
   .site-shell {
-    width: min(100% - 28px, 680px);
+    width: min(100% - var(--blog-mobile-side-padding), var(--blog-main-width));
   }
 
   .site-grid {
