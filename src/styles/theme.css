@@ -33,23 +33,23 @@
   --blog-line-height: 1.9;
 
   /* ページ全体の最大幅です。大きいほど横に広がります。 */
-  --blog-page-width: 1160px;
+  --blog-page-width: 1240px;
 
   /* 本文部分の幅です。日本語長文では 700px から 800px くらいが読みやすいです。 */
-  --blog-main-width: 780px;
+  --blog-main-width: 840px;
 
   /* 右側のサイドバーの幅です。 */
   --blog-sidebar-width: 260px;
 
   /* 本文とサイドバーの間隔です。 */
-  --blog-column-gap: 56px;
+  --blog-column-gap: 48px;
 
   /* 右側のサイドバーを少し下にずらす量です。 */
   --blog-sidebar-offset: 18px;
 
   /* ページ左右の余白です。 */
-  --blog-side-padding: 24px;
+  --blog-side-padding: 12px;
 
   /* スマホでの左右の余白です。 */
-  --blog-mobile-side-padding: 22px;
+  --blog-mobile-side-padding: 16px;
 }
