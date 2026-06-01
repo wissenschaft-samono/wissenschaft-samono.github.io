@@ -35,8 +35,8 @@
   /* ページ全体の最大幅です。大きいほど横に広がります。 */
   --blog-page-width: 1160px;
 
-  /* 本文部分の幅です。日本語長文では 680px から 760px くらいが読みやすいです。 */
-  --blog-main-width: 740px;
+  /* 本文部分の幅です。日本語長文では 700px から 800px くらいが読みやすいです。 */
+  --blog-main-width: 780px;
 
   /* 右側のサイドバーの幅です。 */
   --blog-sidebar-width: 260px;
@@ -48,8 +48,8 @@
   --blog-sidebar-offset: 18px;
 
   /* ページ左右の余白です。 */
-  --blog-side-padding: 40px;
+  --blog-side-padding: 24px;
 
   /* スマホでの左右の余白です。 */
-  --blog-mobile-side-padding: 28px;
+  --blog-mobile-side-padding: 22px;
 }
