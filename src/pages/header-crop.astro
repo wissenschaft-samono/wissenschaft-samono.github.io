@@ -1,0 +1,369 @@
+---
+import '@/styles/theme.css';
+import '@/styles/global.css';
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>ヘッダー写真の範囲指定 | 風呂は命の洗濯</title>
+  </head>
+  <body class="crop-page">
+    <main class="crop-shell">
+      <header class="crop-header">
+        <div>
+          <p class="eyebrow">Header Crop</p>
+          <h1>ヘッダー写真の範囲指定</h1>
+          <p>写真の上で横長の枠を動かして、ブログタイトルの背景に使いたい範囲を決めます。</p>
+        </div>
+        <a href="/style-lab/">見た目調整へ</a>
+      </header>
+
+      <section class="workspace">
+        <section class="photo-panel" aria-label="写真から範囲を選ぶ">
+          <div class="photo-wrap" id="photoWrap">
+            <img src="/images/header-source.jpeg" alt="ヘッダー候補写真" id="sourceImage" />
+            <div class="shade shade-top" id="shadeTop"></div>
+            <div class="shade shade-bottom" id="shadeBottom"></div>
+            <div class="crop-box" id="cropBox" role="group" aria-label="選択範囲">
+              <span>この範囲を使う</span>
+            </div>
+          </div>
+        </section>
+
+        <aside class="controls" aria-label="調整">
+          <section>
+            <h2>調整</h2>
+            <label>
+              範囲の高さ
+              <input id="heightRange" type="range" min="12" max="40" value="24" />
+              <output id="heightValue">24%</output>
+            </label>
+            <label>
+              上下位置
+              <input id="yRange" type="range" min="0" max="100" value="48" />
+              <output id="yValue">48%</output>
+            </label>
+            <label>
+              表示の暗さ
+              <input id="overlayRange" type="range" min="0" max="70" value="18" />
+              <output id="overlayValue">18%</output>
+            </label>
+          </section>
+
+          <section>
+            <h2>ヘッダープレビュー</h2>
+            <div class="header-preview" id="headerPreview">
+              <strong>風呂は命の洗濯</strong>
+              <span>杜の都に潜む大学院生の哲学と文学についての覚え書き</span>
+            </div>
+          </section>
+
+          <section>
+            <h2>反映用の値</h2>
+            <p>気に入ったら、下の内容をそのまま送ってください。</p>
+            <textarea id="output" readonly></textarea>
+            <button id="copyButton" type="button">コピー</button>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script>
+      // @ts-nocheck
+      const state = {
+        y: 48,
+        height: 24,
+        overlay: 18,
+      };
+
+      const cropBox = document.querySelector('#cropBox');
+      const shadeTop = document.querySelector('#shadeTop');
+      const shadeBottom = document.querySelector('#shadeBottom');
+      const heightRange = document.querySelector('#heightRange');
+      const yRange = document.querySelector('#yRange');
+      const overlayRange = document.querySelector('#overlayRange');
+      const heightValue = document.querySelector('#heightValue');
+      const yValue = document.querySelector('#yValue');
+      const overlayValue = document.querySelector('#overlayValue');
+      const headerPreview = document.querySelector('#headerPreview');
+      const output = document.querySelector('#output');
+      const copyButton = document.querySelector('#copyButton');
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+      }
+
+      function apply() {
+        const top = clamp(state.y - state.height / 2, 0, 100 - state.height);
+        const bottom = 100 - top - state.height;
+        cropBox.style.top = `${top}%`;
+        cropBox.style.height = `${state.height}%`;
+        shadeTop.style.height = `${top}%`;
+        shadeBottom.style.top = `${top + state.height}%`;
+        shadeBottom.style.height = `${bottom}%`;
+        heightRange.value = state.height;
+        yRange.value = state.y;
+        overlayRange.value = state.overlay;
+        heightValue.textContent = `${state.height}%`;
+        yValue.textContent = `${state.y}%`;
+        overlayValue.textContent = `${state.overlay}%`;
+        headerPreview.style.backgroundImage =
+          `linear-gradient(rgba(253, 252, 249, ${state.overlay / 100}), rgba(253, 252, 249, ${Math.min(0.86, state.overlay / 100 + 0.16)})), url('/images/header-source.jpeg')`;
+        headerPreview.style.backgroundPosition = `center ${state.y}%`;
+        output.value = [
+          `画像: public/images/header-source.jpeg`,
+          `おすすめ表示位置: center ${state.y}%`,
+          `選択範囲: 上から約 ${Math.round(top)}% 〜 ${Math.round(top + state.height)}%`,
+          `ヘッダーの明るい重ね: ${state.overlay}%`,
+          ``,
+          `CSSに反映するなら:`,
+          `background-image: linear-gradient(rgba(253, 252, 249, ${state.overlay / 100}), rgba(253, 252, 249, ${Math.min(0.86, state.overlay / 100 + 0.16)})), url('/images/header-source.jpeg');`,
+          `background-position: center ${state.y}%;`,
+        ].join('\n');
+      }
+
+      heightRange.addEventListener('input', () => {
+        state.height = Number(heightRange.value);
+        apply();
+      });
+
+      yRange.addEventListener('input', () => {
+        state.y = Number(yRange.value);
+        apply();
+      });
+
+      overlayRange.addEventListener('input', () => {
+        state.overlay = Number(overlayRange.value);
+        apply();
+      });
+
+      cropBox.addEventListener('pointerdown', (event) => {
+        event.preventDefault();
+        const startY = event.clientY;
+        const startValue = state.y;
+        const rect = cropBox.parentElement.getBoundingClientRect();
+
+        function move(moveEvent) {
+          const delta = ((moveEvent.clientY - startY) / rect.height) * 100;
+          state.y = clamp(Math.round(startValue + delta), state.height / 2, 100 - state.height / 2);
+          apply();
+        }
+
+        function up() {
+          window.removeEventListener('pointermove', move);
+          window.removeEventListener('pointerup', up);
+        }
+
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      });
+
+      copyButton.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(output.value);
+        copyButton.textContent = 'コピーしました';
+        setTimeout(() => {
+          copyButton.textContent = 'コピー';
+        }, 1200);
+      });
+
+      apply();
+    </script>
+  </body>
+</html>
+
+<style>
+  .crop-page {
+    background: #f5f3ee;
+    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'YuGothic', system-ui, sans-serif;
+  }
+
+  .crop-shell {
+    width: min(1440px, calc(100% - 24px));
+    margin: 0 auto;
+    padding: 1rem 0 2.5rem;
+  }
+
+  .crop-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: start;
+    padding: 0.8rem 0 1rem;
+  }
+
+  .eyebrow {
+    margin: 0;
+    color: var(--blog-link);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  h1 {
+    margin: 0.1rem 0 0.25rem;
+    font-size: 1.7rem;
+    line-height: 1.35;
+  }
+
+  .crop-header p:last-child {
+    margin: 0;
+    color: #68625d;
+  }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .photo-panel,
+  .controls {
+    border: 1px solid #ddd6cd;
+    background: #fffdf8;
+  }
+
+  .photo-panel {
+    padding: 1rem;
+  }
+
+  .photo-wrap {
+    position: relative;
+    overflow: hidden;
+    line-height: 0;
+    background: #1f1f1f;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    user-select: none;
+  }
+
+  .shade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: rgba(15, 15, 20, 0.54);
+    pointer-events: none;
+  }
+
+  .shade-top {
+    top: 0;
+  }
+
+  .crop-box {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border: 3px solid #fffdf8;
+    box-shadow: 0 0 0 1px rgba(90, 74, 120, 0.9), 0 12px 36px rgba(0, 0, 0, 0.24);
+    cursor: ns-resize;
+    touch-action: none;
+  }
+
+  .crop-box span {
+    position: absolute;
+    right: 12px;
+    top: 10px;
+    border: 1px solid rgba(255, 253, 248, 0.78);
+    padding: 0.35rem 0.55rem;
+    background: rgba(31, 31, 31, 0.42);
+    color: white;
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
+  .controls {
+    position: sticky;
+    top: 12px;
+    padding: 1rem;
+  }
+
+  .controls section + section {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid #e3dcd2;
+  }
+
+  .controls h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  label {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.35rem 0.75rem;
+    align-items: center;
+    margin-bottom: 0.85rem;
+  }
+
+  input[type='range'] {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  output {
+    color: var(--blog-link);
+    font-weight: 700;
+  }
+
+  .header-preview {
+    min-height: 170px;
+    display: grid;
+    align-content: center;
+    gap: 0.2rem;
+    padding: 1.4rem;
+    border: 1px solid #ddd6cd;
+    background-size: cover;
+    color: var(--blog-text);
+  }
+
+  .header-preview strong {
+    font-size: 2rem;
+    line-height: 1.2;
+    text-shadow: 0 1px 18px rgba(253, 252, 249, 0.9);
+  }
+
+  .header-preview span {
+    color: var(--blog-muted-text);
+    text-shadow: 0 1px 14px rgba(253, 252, 249, 0.9);
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 190px;
+    resize: vertical;
+    border: 1px solid #ddd6cd;
+    padding: 0.75rem;
+    background: #fffaf1;
+    color: #1f1f1f;
+    font: 0.82rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 0.7rem;
+    border: 1px solid var(--blog-link);
+    padding: 0.6rem 0.75rem;
+    background: var(--blog-link);
+    color: white;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    .workspace {
+      display: block;
+    }
+
+    .controls {
+      position: static;
+      margin-top: 1rem;
+    }
+  }
+</style>
