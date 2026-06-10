@@ -5,7 +5,12 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="site-shell">
-    <p>&copy; {year} {SITE.author}. <a href="/rss.xml">RSS</a></p>
+    <p>
+      &copy; {year} {SITE.author}.
+      <a href="mailto:wissenschaft.samono@gmail.com">wissenschaft.samono@gmail.com</a>
+      <span aria-hidden="true">/</span>
+      <a href="/rss.xml">RSS</a>
+    </p>
   </div>
 </footer>
 
@@ -14,11 +19,14 @@ const year = new Date().getFullYear();
     border-top: 1px solid var(--line);
     color: var(--muted);
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 0.76rem;
+    font-size: 0.82rem;
   }
 
   p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.55rem;
     margin: 0;
-    padding: 0.6rem 0 0.8rem;
+    padding: 0.9rem 0 1.15rem;
   }
 </style>
