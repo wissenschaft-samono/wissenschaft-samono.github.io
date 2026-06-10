@@ -28,7 +28,10 @@ import { SITE } from '@/site.config';
   }
 
   .header-inner {
-    padding: 3.4rem 0 1.4rem;
+    min-height: 280px;
+    display: grid;
+    align-content: end;
+    padding: 5.2rem 0 1.8rem;
   }
 
   .site-title {
@@ -61,7 +64,8 @@ import { SITE } from '@/site.config';
 
   @media (max-width: 899px) {
     .header-inner {
-      padding: 2.4rem 0 1.2rem;
+      min-height: 220px;
+      padding: 3.5rem 0 1.3rem;
     }
   }
 </style>
