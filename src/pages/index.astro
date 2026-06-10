@@ -7,6 +7,19 @@ const posts = await getAllPosts();
 ---
 
 <BaseLayout title="Home">
-  <h1 class="page-title">Latest Entries</h1>
+  <h1 class="section-title">Latest Entries</h1>
   <PostList posts={posts} />
 </BaseLayout>
+
+<style>
+  .section-title {
+    margin: 0 0 1.2rem;
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+</style>

@@ -66,6 +66,10 @@ const archiveYears = getArchiveYears(recentPosts);
     letter-spacing: 0;
   }
 
+  a {
+    text-decoration-thickness: 0.06em;
+  }
+
   p {
     margin: 0.35rem 0;
   }
@@ -89,8 +93,21 @@ const archiveYears = getArchiveYears(recentPosts);
   @media (max-width: 899px) {
     .sidebar {
       margin-top: 2.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--line);
+      padding: 1.25rem 1rem 0.2rem;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--surface) 72%, var(--bg));
+    }
+
+    .sidebar::before {
+      content: 'Site Info';
+      display: block;
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
   }
 </style>
