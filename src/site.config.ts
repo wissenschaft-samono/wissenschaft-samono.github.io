@@ -1,8 +1,8 @@
 export const SITE = {
   title: '風呂は命の洗濯',
-  subtitle: 'Literature, Phenomenology & Criticism',
+  subtitle: '杜の都に潜む大学院生の哲学と文学についての覚え書き',
   author: 'さもの',
-  description: '文学・哲学・批評理論についての読書メモと短い試論。',
+  description: '日本学を専攻する大学院生だが、現象学を中心とした哲学に関心あり。',
   locale: 'ja-JP',
   timezone: 'Asia/Tokyo',
   url: 'https://wissenschaft-samono.github.io',
