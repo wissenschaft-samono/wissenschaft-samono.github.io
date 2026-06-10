@@ -26,6 +26,7 @@ body {
 
 a {
   color: var(--accent);
+  text-decoration-line: none;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.18em;
 }
@@ -33,6 +34,7 @@ a {
 a:hover,
 a:focus-visible {
   color: var(--accent-dark);
+  text-decoration-line: underline;
 }
 
 :focus-visible {
