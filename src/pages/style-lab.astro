@@ -15,30 +15,44 @@ import '@/styles/global.css';
     <main class="lab-shell">
       <header class="lab-header">
         <div>
-          <p class="eyebrow">Style Lab</p>
+          <p class="eyebrow">Style Studio</p>
           <h1>見た目調整</h1>
-          <p>本番ブログに近いプレビューを見ながら、幅・余白・文字・色を細かく試せます。</p>
+          <p>本物のブログ画面を見ながら、幅・余白・文字・色をスライダーで調整できます。</p>
         </div>
         <a href="/">ブログへ戻る</a>
       </header>
 
-      <section class="workspace" aria-label="見た目調整ワークスペース">
-        <aside class="panel" aria-label="調整パネル">
-          <div class="panel-block">
+      <section class="studio">
+        <aside class="controls" aria-label="調整パネル">
+          <div class="control-group">
+            <h2>プレビュー</h2>
+            <div class="segmented" aria-label="表示ページ">
+              <button type="button" data-page="/" class="active">トップ</button>
+              <button type="button" data-page="/posts/sample-reading-note/">記事</button>
+              <button type="button" data-page="/about/">About</button>
+            </div>
+            <label>
+              <span>画面幅</span>
+              <input id="screenWidth" type="range" min="390" max="1500" step="10" value="1360" />
+              <output id="screenWidthValue">1360px</output>
+            </label>
+          </div>
+
+          <div class="control-group">
             <h2>幅と余白</h2>
             <label>
               <span>ページ全体</span>
-              <input data-key="page" type="range" min="1080" max="1520" step="10" />
+              <input data-key="page" type="range" min="980" max="1520" step="10" />
               <output data-value="page"></output>
             </label>
             <label>
-              <span>本文</span>
-              <input data-key="main" type="range" min="720" max="1080" step="10" />
+              <span>本文幅</span>
+              <input data-key="main" type="range" min="680" max="1080" step="10" />
               <output data-value="main"></output>
             </label>
             <label>
-              <span>Profile欄</span>
-              <input data-key="sidebar" type="range" min="200" max="320" step="10" />
+              <span>Profile幅</span>
+              <input data-key="sidebar" type="range" min="200" max="340" step="10" />
               <output data-value="sidebar"></output>
             </label>
             <label>
@@ -48,8 +62,13 @@ import '@/styles/global.css';
             </label>
             <label>
               <span>外側の余白</span>
-              <input data-key="sidePadding" type="range" min="0" max="56" step="2" />
+              <input data-key="sidePadding" type="range" min="0" max="64" step="2" />
               <output data-value="sidePadding"></output>
+            </label>
+            <label>
+              <span>スマホ余白</span>
+              <input data-key="mobileSidePadding" type="range" min="8" max="32" step="2" />
+              <output data-value="mobileSidePadding"></output>
             </label>
             <label>
               <span>Profileの下げ幅</span>
@@ -58,7 +77,7 @@ import '@/styles/global.css';
             </label>
           </div>
 
-          <div class="panel-block">
+          <div class="control-group">
             <h2>文字</h2>
             <label>
               <span>本文サイズ</span>
@@ -66,126 +85,63 @@ import '@/styles/global.css';
               <output data-value="font"></output>
             </label>
             <label>
-              <span>行間</span>
-              <input data-key="lineHeight" type="range" min="1.55" max="2.15" step="0.05" />
-              <output data-value="lineHeight"></output>
+              <span>スマホ本文</span>
+              <input data-key="mobileFont" type="range" min="14" max="18" step="0.5" />
+              <output data-value="mobileFont"></output>
             </label>
             <label>
-              <span>タイトルサイズ</span>
-              <input data-key="titleSize" type="range" min="30" max="58" step="1" />
-              <output data-value="titleSize"></output>
+              <span>行間</span>
+              <input data-key="lineHeight" type="range" min="1.55" max="2.2" step="0.05" />
+              <output data-value="lineHeight"></output>
             </label>
           </div>
 
-          <div class="panel-block color-grid">
+          <div class="control-group">
             <h2>色</h2>
-            <label>
+            <label class="color-row">
               <span>背景</span>
               <input data-key="background" type="color" />
             </label>
-            <label>
+            <label class="color-row">
               <span>文字</span>
               <input data-key="text" type="color" />
             </label>
-            <label>
-              <span>アクセント</span>
-              <input data-key="link" type="color" />
-            </label>
-            <label>
+            <label class="color-row">
               <span>薄い文字</span>
               <input data-key="muted" type="color" />
             </label>
-            <label>
+            <label class="color-row">
+              <span>アクセント</span>
+              <input data-key="link" type="color" />
+            </label>
+            <label class="color-row">
               <span>線</span>
               <input data-key="border" type="color" />
             </label>
           </div>
 
-          <div class="panel-block">
-            <h2>形</h2>
-            <div class="button-row">
+          <div class="control-group">
+            <h2>プリセット</h2>
+            <div class="preset-grid">
+              <button type="button" data-preset="current">現在</button>
               <button type="button" data-preset="wide">本文広め</button>
-              <button type="button" data-preset="calm">落ち着き</button>
+              <button type="button" data-preset="soft">柔らかめ</button>
               <button type="button" data-preset="compact">余白少なめ</button>
             </div>
-            <button type="button" class="ghost-button" id="resetButton">最初に戻す</button>
           </div>
         </aside>
 
-        <section class="preview-section" aria-label="プレビュー">
-          <div class="preview-topbar">
+        <section class="preview-column" aria-label="実際のブログプレビュー">
+          <div class="preview-toolbar">
             <div>
-              <strong>プレビュー</strong>
-              <span>紫のつまみをドラッグできます</span>
+              <strong>ライブプレビュー</strong>
+              <span>本物のページに一時的な見た目設定をかけています。</span>
             </div>
-            <div class="metrics">
-              <span>本文 <output data-value="main"></output></span>
-              <span>Profile <output data-value="sidebar"></output></span>
-              <span>間 <output data-value="gap"></output></span>
-            </div>
+            <button type="button" id="copyButton">反映用の値をコピー</button>
           </div>
 
-          <div class="preview-canvas" id="previewCanvas">
-            <div class="mock-page" id="mockPage">
-              <header class="mock-site-header">
-                <a class="mock-title" href="#">風呂は命の洗濯</a>
-                <p>Literature, Phenomenology &amp; Criticism</p>
-                <nav>
-                  <a href="#">Home</a>
-                  <a href="#">Archive</a>
-                  <a href="#">Categories</a>
-                  <a href="#">About</a>
-                  <a href="#">RSS</a>
-                </nav>
-              </header>
-
-              <main class="mock-grid">
-                <article class="mock-main">
-                  <h1>読書メモの表示サンプル</h1>
-                  <p class="mock-meta">2026年5月31日 / 読書メモ</p>
-                  <p>
-                    ここが記事本文です。日本語の長文を読んだときに、横幅が広すぎないか、狭すぎないかを確認できます。
-                    本文の幅、行間、サイドバーとの距離が合うと、読むときの圧迫感がかなり減ります。
-                  </p>
-                  <p>
-                    右の Profile 欄を脇に逃がしたいときは、本文幅を広げつつ、Profile 欄を少し細くし、間隔を広げるのが効きます。
-                    外側の余白は、ページ全体が画面の端へどれくらい近づくかを決めます。
-                  </p>
-                  <h2>小見出し</h2>
-                  <p>
-                    見出し、本文、引用、表の雰囲気を同時に見られるようにしています。
-                    気に入った値ができたら、下の「反映用の値」をそのまま送ってください。
-                  </p>
-                  <blockquote>引用や補足が入ったときの見え方も、この幅で確認できます。</blockquote>
-                </article>
-
-                <div class="divider-handle" id="dividerHandle" role="separator" aria-label="本文とProfile欄の境目を調整">
-                  <span>境目</span>
-                </div>
-
-                <aside class="mock-sidebar">
-                  <section>
-                    <h2>Profile</h2>
-                    <p><strong>さもの</strong></p>
-                    <p>文学・哲学・批評理論についての読書メモと短い試論。</p>
-                  </section>
-                  <section>
-                    <h2>Recent Entries</h2>
-                    <p>このブログについて</p>
-                    <p>読書メモの表示サンプル</p>
-                  </section>
-                  <section>
-                    <h2>Categories</h2>
-                    <p>読書メモ (1)</p>
-                    <p>雑記 (1)</p>
-                  </section>
-                </aside>
-              </main>
-
-              <div class="page-handle" id="pageHandle" role="separator" aria-label="ページ全体の幅を調整">
-                <span>全体幅</span>
-              </div>
-            </div>
+          <div class="preview-stage">
+            <iframe id="previewFrame" src="/" title="ブログの見た目プレビュー"></iframe>
           </div>
 
           <section class="readout" aria-label="反映用の値">
@@ -194,7 +150,6 @@ import '@/styles/global.css';
               <p>気に入ったら、この内容をそのまま送ってください。</p>
             </div>
             <textarea id="cssOutput" readonly></textarea>
-            <button type="button" id="copyButton">コピー</button>
           </section>
         </section>
       </section>
@@ -203,29 +158,33 @@ import '@/styles/global.css';
     <script>
       // @ts-nocheck
       const initial = {
-        page: 1340,
-        main: 940,
-        sidebar: 240,
-        gap: 64,
-        sidePadding: 12,
-        offset: 18,
-        font: 17,
-        lineHeight: 1.9,
-        titleSize: 40,
         background: '#fdfcf9',
         text: '#1f1f1f',
         muted: '#6b6760',
         link: '#5a4a78',
         border: '#dedbd4',
+        font: 17,
+        mobileFont: 16,
+        lineHeight: 1.9,
+        page: 1340,
+        main: 940,
+        sidebar: 240,
+        gap: 64,
+        offset: 18,
+        sidePadding: 12,
+        mobileSidePadding: 16,
       };
+
       const state = { ...initial };
-      const ranges = document.querySelectorAll('input[data-key]');
-      const outputs = document.querySelectorAll('output[data-value]');
+      const frame = document.querySelector('#previewFrame');
       const cssOutput = document.querySelector('#cssOutput');
       const copyButton = document.querySelector('#copyButton');
-      const resetButton = document.querySelector('#resetButton');
-      const dividerHandle = document.querySelector('#dividerHandle');
-      const pageHandle = document.querySelector('#pageHandle');
+      const screenWidth = document.querySelector('#screenWidth');
+      const screenWidthValue = document.querySelector('#screenWidthValue');
+      const inputs = document.querySelectorAll('[data-key]');
+      const outputs = document.querySelectorAll('[data-value]');
+      const pageButtons = document.querySelectorAll('[data-page]');
+      const presetButtons = document.querySelectorAll('[data-preset]');
 
       function clamp(value, min, max) {
         return Math.max(min, Math.min(max, value));
@@ -237,144 +196,111 @@ import '@/styles/global.css';
         return `#${parts.map((part) => clamp(part - 30, 0, 255).toString(16).padStart(2, '0')).join('')}`;
       }
 
-      function syncInputs() {
-        ranges.forEach((input) => {
+      function vars() {
+        return {
+          '--blog-background': state.background,
+          '--blog-text': state.text,
+          '--blog-muted-text': state.muted,
+          '--blog-link': state.link,
+          '--blog-link-hover': darken(state.link),
+          '--blog-border': state.border,
+          '--blog-font-size': `${state.font}px`,
+          '--blog-mobile-font-size': `${state.mobileFont}px`,
+          '--blog-line-height': state.lineHeight,
+          '--blog-page-width': `${state.page}px`,
+          '--blog-main-width': `${state.main}px`,
+          '--blog-sidebar-width': `${state.sidebar}px`,
+          '--blog-column-gap': `${state.gap}px`,
+          '--blog-sidebar-offset': `${state.offset}px`,
+          '--blog-side-padding': `${state.sidePadding}px`,
+          '--blog-mobile-side-padding': `${state.mobileSidePadding}px`,
+        };
+      }
+
+      function syncControls() {
+        inputs.forEach((input) => {
           input.value = state[input.dataset.key];
         });
-      }
-
-      function syncOutputs() {
         outputs.forEach((output) => {
           const value = state[output.dataset.value];
-          output.textContent = typeof value === 'number' ? `${value}px` : value;
-          if (output.dataset.value === 'lineHeight') output.textContent = value;
+          output.textContent = typeof value === 'number' && output.dataset.value !== 'lineHeight' ? `${value}px` : value;
         });
       }
 
-      function applyState() {
-        const root = document.documentElement;
-        root.style.setProperty('--lab-page-width', `${state.page}px`);
-        root.style.setProperty('--lab-main-width', `${state.main}px`);
-        root.style.setProperty('--lab-sidebar-width', `${state.sidebar}px`);
-        root.style.setProperty('--lab-gap', `${state.gap}px`);
-        root.style.setProperty('--lab-side-padding', `${state.sidePadding}px`);
-        root.style.setProperty('--lab-offset', `${state.offset}px`);
-        root.style.setProperty('--blog-font-size', `${state.font}px`);
-        root.style.setProperty('--blog-line-height', state.lineHeight);
-        root.style.setProperty('--lab-title-size', `${state.titleSize}px`);
-        root.style.setProperty('--blog-background', state.background);
-        root.style.setProperty('--blog-text', state.text);
-        root.style.setProperty('--blog-muted-text', state.muted);
-        root.style.setProperty('--blog-link', state.link);
-        root.style.setProperty('--blog-link-hover', darken(state.link));
-        root.style.setProperty('--blog-border', state.border);
-        syncInputs();
-        syncOutputs();
-        cssOutput.value = [
-          `--blog-background: ${state.background};`,
-          `--blog-text: ${state.text};`,
-          `--blog-muted-text: ${state.muted};`,
-          `--blog-link: ${state.link};`,
-          `--blog-link-hover: ${darken(state.link)};`,
-          `--blog-border: ${state.border};`,
-          `--blog-font-size: ${state.font}px;`,
-          `--blog-line-height: ${state.lineHeight};`,
-          `--blog-page-width: ${state.page}px;`,
-          `--blog-main-width: ${state.main}px;`,
-          `--blog-sidebar-width: ${state.sidebar}px;`,
-          `--blog-column-gap: ${state.gap}px;`,
-          `--blog-sidebar-offset: ${state.offset}px;`,
-          `--blog-side-padding: ${state.sidePadding}px;`,
-        ].join('\n');
+      function applyToFrame() {
+        const doc = frame.contentDocument;
+        if (!doc) return;
+        const root = doc.documentElement;
+        Object.entries(vars()).forEach(([name, value]) => root.style.setProperty(name, value));
       }
 
-      function updateFromInput(input) {
-        const key = input.dataset.key;
-        state[key] = input.type === 'color' ? input.value : Number(input.value);
-        applyState();
+      function updateOutput() {
+        cssOutput.value = Object.entries(vars()).map(([name, value]) => `${name}: ${value};`).join('\n');
+      }
+
+      function applyAll() {
+        syncControls();
+        applyToFrame();
+        updateOutput();
       }
 
       function setPreset(name) {
-        if (name === 'wide') {
-          Object.assign(state, { page: 1420, main: 1020, sidebar: 220, gap: 76, sidePadding: 8 });
-        }
-        if (name === 'calm') {
-          Object.assign(state, { page: 1240, main: 820, sidebar: 260, gap: 64, sidePadding: 28, font: 17, lineHeight: 1.9 });
-        }
-        if (name === 'compact') {
-          Object.assign(state, { page: 1320, main: 940, sidebar: 230, gap: 48, sidePadding: 6 });
-        }
-        applyState();
+        if (name === 'current') Object.assign(state, initial);
+        if (name === 'wide') Object.assign(state, { page: 1440, main: 1040, sidebar: 220, gap: 72, sidePadding: 8 });
+        if (name === 'soft') Object.assign(state, { background: '#fffdf8', muted: '#766f68', link: '#6a527d', border: '#e5ded5', font: 17.5, lineHeight: 1.95 });
+        if (name === 'compact') Object.assign(state, { page: 1360, main: 980, sidebar: 220, gap: 44, sidePadding: 4 });
+        applyAll();
       }
 
-      function startDividerDrag(event) {
-        event.preventDefault();
-        const startX = event.clientX;
-        const startMain = state.main;
-        const startSidebar = state.sidebar;
-        function move(moveEvent) {
-          const delta = moveEvent.clientX - startX;
-          state.main = clamp(Math.round(startMain + delta), 720, 1080);
-          state.sidebar = clamp(Math.round(startSidebar - delta), 200, 320);
-          state.page = state.main + state.sidebar + state.gap + 52;
-          applyState();
-        }
-        attachDrag(move);
-      }
+      inputs.forEach((input) => {
+        input.addEventListener('input', () => {
+          state[input.dataset.key] = input.type === 'color' ? input.value : Number(input.value);
+          applyAll();
+        });
+      });
 
-      function startPageDrag(event) {
-        event.preventDefault();
-        const startX = event.clientX;
-        const startPage = state.page;
-        function move(moveEvent) {
-          const delta = moveEvent.clientX - startX;
-          state.page = clamp(Math.round(startPage + delta), 1080, 1520);
-          applyState();
-        }
-        attachDrag(move);
-      }
+      screenWidth.addEventListener('input', () => {
+        frame.style.width = `${screenWidth.value}px`;
+        screenWidthValue.textContent = `${screenWidth.value}px`;
+      });
 
-      function attachDrag(move) {
-        function up() {
-          window.removeEventListener('pointermove', move);
-          window.removeEventListener('pointerup', up);
-        }
-        window.addEventListener('pointermove', move);
-        window.addEventListener('pointerup', up);
-      }
+      pageButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          pageButtons.forEach((item) => item.classList.remove('active'));
+          button.classList.add('active');
+          frame.src = button.dataset.page;
+        });
+      });
 
-      ranges.forEach((input) => input.addEventListener('input', () => updateFromInput(input)));
-      document.querySelectorAll('[data-preset]').forEach((button) => {
+      presetButtons.forEach((button) => {
         button.addEventListener('click', () => setPreset(button.dataset.preset));
       });
-      resetButton.addEventListener('click', () => {
-        Object.assign(state, initial);
-        applyState();
-      });
-      dividerHandle.addEventListener('pointerdown', startDividerDrag);
-      pageHandle.addEventListener('pointerdown', startPageDrag);
+
       copyButton.addEventListener('click', async () => {
         await navigator.clipboard.writeText(cssOutput.value);
         copyButton.textContent = 'コピーしました';
         setTimeout(() => {
-          copyButton.textContent = 'コピー';
+          copyButton.textContent = '反映用の値をコピー';
         }, 1200);
       });
 
-      applyState();
+      frame.addEventListener('load', applyToFrame);
+      frame.style.width = `${screenWidth.value}px`;
+      applyAll();
     </script>
   </body>
 </html>
 
 <style>
   .lab-page {
-    background: var(--blog-background);
+    background: #f5f3ee;
+    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'YuGothic', system-ui, sans-serif;
   }
 
   .lab-shell {
-    width: min(1500px, calc(100% - 24px));
+    width: min(1520px, calc(100% - 24px));
     margin: 0 auto;
-    padding: 1.2rem 0 3rem;
+    padding: 1rem 0 2.5rem;
   }
 
   .lab-header {
@@ -382,60 +308,57 @@ import '@/styles/global.css';
     justify-content: space-between;
     gap: 1.5rem;
     align-items: start;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--blog-border);
+    padding: 0.8rem 0 1rem;
   }
 
   .eyebrow {
     margin: 0;
     color: var(--blog-link);
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 0.85rem;
+    font-weight: 700;
   }
 
   h1 {
-    margin: 0.1rem 0 0.35rem;
-    font-size: 1.8rem;
+    margin: 0.1rem 0 0.25rem;
+    font-size: 1.7rem;
     line-height: 1.35;
   }
 
   .lab-header p:last-child {
     margin: 0;
-    color: var(--blog-muted-text);
+    color: #68625d;
   }
 
-  .workspace {
+  .studio {
     display: grid;
     grid-template-columns: 320px minmax(0, 1fr);
     gap: 1rem;
     align-items: start;
   }
 
-  .panel,
-  .preview-section,
+  .controls,
+  .preview-column,
   .readout {
-    border: 1px solid var(--blog-border);
-    background: var(--blog-surface);
+    border: 1px solid #ddd6cd;
+    background: #fffdf8;
   }
 
-  .panel {
+  .controls {
     position: sticky;
     top: 12px;
     max-height: calc(100vh - 24px);
     overflow: auto;
     padding: 1rem;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 0.9rem;
   }
 
-  .panel-block + .panel-block {
-    margin-top: 1.2rem;
-    padding-top: 1.2rem;
-    border-top: 1px solid var(--blog-border);
+  .control-group + .control-group {
+    margin-top: 1.15rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid #e3dcd2;
   }
 
-  .panel h2 {
+  .control-group h2 {
     margin: 0 0 0.75rem;
     font-size: 1rem;
   }
@@ -445,7 +368,7 @@ import '@/styles/global.css';
     grid-template-columns: 1fr auto;
     gap: 0.35rem 0.65rem;
     align-items: center;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.75rem;
   }
 
   label input[type='range'] {
@@ -453,230 +376,98 @@ import '@/styles/global.css';
     width: 100%;
   }
 
-  input[type='color'] {
-    width: 74px;
-    height: 34px;
-    border: 1px solid var(--blog-border);
-    background: var(--blog-surface);
-  }
-
   output {
-    min-width: 54px;
+    min-width: 58px;
     color: var(--blog-link);
     font-weight: 700;
     text-align: right;
   }
 
-  .color-grid label {
+  input[type='color'] {
+    width: 76px;
+    height: 34px;
+    border: 1px solid #ddd6cd;
+    background: white;
+  }
+
+  .color-row {
     grid-template-columns: 1fr auto;
   }
 
-  .button-row {
+  .segmented,
+  .preset-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.45rem;
+    margin-bottom: 0.8rem;
   }
 
-  .button-row button:first-child {
-    grid-column: 1 / -1;
+  .preset-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   button {
     border: 1px solid var(--blog-link);
-    padding: 0.6rem 0.75rem;
-    background: var(--blog-link);
-    color: white;
+    padding: 0.55rem 0.65rem;
+    background: transparent;
+    color: var(--blog-link);
     font: inherit;
     cursor: pointer;
   }
 
-  .ghost-button {
-    width: 100%;
-    margin-top: 0.6rem;
-    background: transparent;
-    color: var(--blog-link);
+  button.active,
+  button:hover,
+  #copyButton {
+    background: var(--blog-link);
+    color: white;
   }
 
-  .preview-section {
+  .preview-column {
     min-width: 0;
   }
 
-  .preview-topbar {
+  .preview-toolbar {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--blog-border);
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 0.9rem;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #ddd6cd;
   }
 
-  .preview-topbar span {
-    color: var(--blog-muted-text);
+  .preview-toolbar span {
+    display: block;
+    color: #756e68;
+    font-size: 0.88rem;
   }
 
-  .metrics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-  }
-
-  .preview-canvas {
+  .preview-stage {
     overflow: auto;
-    padding: 26px;
+    min-height: 640px;
+    padding: 22px;
     background:
       linear-gradient(90deg, rgba(90, 74, 120, 0.08) 1px, transparent 1px),
       linear-gradient(180deg, rgba(90, 74, 120, 0.08) 1px, transparent 1px);
     background-size: 24px 24px;
   }
 
-  .mock-page {
-    --lab-page-width: 1340px;
-    --lab-main-width: 940px;
-    --lab-sidebar-width: 240px;
-    --lab-gap: 64px;
-    --lab-side-padding: 12px;
-    --lab-offset: 18px;
-    --lab-title-size: 40px;
-    position: relative;
-    width: var(--lab-page-width);
-    min-width: 980px;
-    margin: 0 auto;
-    padding: 0 var(--lab-side-padding) 28px;
-    border: 2px solid color-mix(in srgb, var(--blog-link) 42%, var(--blog-border));
-    background: var(--blog-background);
-    box-shadow: 0 16px 40px rgba(31, 31, 31, 0.09);
-  }
-
-  .mock-site-header {
-    padding: 28px 0 18px;
-    border-bottom: 1px solid var(--blog-border);
-  }
-
-  .mock-title {
+  iframe {
     display: block;
-    color: var(--blog-text);
-    font-size: var(--lab-title-size);
-    font-weight: 700;
-    line-height: 1.2;
-    text-decoration: none;
-  }
-
-  .mock-site-header p {
-    margin: 0.35rem 0 1rem;
-    color: var(--blog-muted-text);
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 0.95rem;
-  }
-
-  .mock-site-header nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 1.1rem;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 0.9rem;
-  }
-
-  .mock-grid {
-    position: relative;
-    display: grid;
-    grid-template-columns: var(--lab-main-width) var(--lab-sidebar-width);
-    gap: var(--lab-gap);
-    align-items: start;
-    padding-top: 2.2rem;
-  }
-
-  .mock-main h1 {
-    margin: 0 0 0.9rem;
-    font-size: 2rem;
-  }
-
-  .mock-main h2 {
-    margin: 2rem 0 0.8rem;
-    padding-bottom: 0.25rem;
-    border-bottom: 1px solid var(--blog-border);
-    font-size: 1.45rem;
-  }
-
-  .mock-main p {
-    margin: 1rem 0;
-  }
-
-  .mock-meta {
-    color: var(--blog-muted-text);
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 0.85rem;
-  }
-
-  .mock-sidebar {
-    margin-top: var(--lab-offset);
-    color: var(--blog-muted-text);
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.7;
-  }
-
-  .mock-sidebar section {
-    margin-bottom: 1.1rem;
-    padding-bottom: 1.1rem;
-    border-bottom: 1px solid var(--blog-border);
-  }
-
-  .mock-sidebar h2 {
-    margin: 0 0 0.45rem;
-    color: var(--blog-text);
-    font-size: 0.95rem;
-  }
-
-  .mock-sidebar p {
-    margin: 0.25rem 0;
-  }
-
-  .divider-handle,
-  .page-handle {
-    position: absolute;
-    z-index: 2;
-    display: grid;
-    place-items: center;
-    border: 1px solid color-mix(in srgb, var(--blog-link) 52%, var(--blog-border));
-    background: color-mix(in srgb, var(--blog-link) 20%, var(--blog-surface));
-    color: var(--blog-link);
-    cursor: ew-resize;
-    touch-action: none;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    user-select: none;
-  }
-
-  .divider-handle {
-    top: 40px;
-    bottom: 22px;
-    left: calc(var(--lab-main-width) + (var(--lab-gap) / 2) - 13px);
-    width: 26px;
-  }
-
-  .divider-handle span,
-  .page-handle span {
-    writing-mode: vertical-rl;
-  }
-
-  .page-handle {
-    top: 50%;
-    right: -13px;
-    width: 26px;
-    height: 190px;
-    transform: translateY(-50%);
+    width: 1360px;
+    height: 760px;
+    min-width: 390px;
+    border: 1px solid #cfc6bb;
+    background: white;
+    box-shadow: 0 14px 36px rgba(31, 31, 31, 0.12);
   }
 
   .readout {
     display: grid;
-    grid-template-columns: 220px 1fr 110px;
+    grid-template-columns: 220px 1fr;
     gap: 1rem;
-    align-items: center;
+    align-items: start;
     margin: 1rem;
     padding: 1rem;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   .readout h2 {
@@ -686,27 +477,27 @@ import '@/styles/global.css';
 
   .readout p {
     margin: 0;
-    color: var(--blog-muted-text);
+    color: #756e68;
     font-size: 0.88rem;
   }
 
   textarea {
     width: 100%;
-    min-height: 130px;
+    min-height: 160px;
     resize: vertical;
-    border: 1px solid var(--blog-border);
+    border: 1px solid #ddd6cd;
     padding: 0.75rem;
-    background: var(--blog-background);
-    color: var(--blog-text);
+    background: #fffaf1;
+    color: #1f1f1f;
     font: 0.82rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
 
-  @media (max-width: 1100px) {
-    .workspace {
+  @media (max-width: 1050px) {
+    .studio {
       display: block;
     }
 
-    .panel {
+    .controls {
       position: static;
       max-height: none;
       margin-bottom: 1rem;
@@ -716,13 +507,8 @@ import '@/styles/global.css';
       display: block;
     }
 
-    textarea,
-    .readout button {
+    textarea {
       margin-top: 0.75rem;
-    }
-
-    .readout button {
-      width: 100%;
     }
   }
 </style>
