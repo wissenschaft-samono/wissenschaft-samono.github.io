@@ -12,7 +12,7 @@
   --blog-link: #5a4a78;
 
   /* リンクにマウスを乗せたときの色です。 */
-  --blog-link-hover: #3f3358;
+  --blog-link-hover: #3c2c5a;
 
   /* 線の色です。薄いほど静かな見た目になります。 */
   --blog-border: #dedbd4;
@@ -33,10 +33,10 @@
   --blog-line-height: 1.9;
 
   /* ページ全体の最大幅です。大きいほど横に広がります。 */
-  --blog-page-width: 1340px;
+  --blog-page-width: 1400px;
 
   /* 本文部分の幅です。日本語長文では 700px から 800px くらいが読みやすいです。 */
-  --blog-main-width: 940px;
+  --blog-main-width: 1000px;
 
   /* 右側のサイドバーの幅です。 */
   --blog-sidebar-width: 240px;
@@ -48,8 +48,8 @@
   --blog-sidebar-offset: 18px;
 
   /* ページ左右の余白です。 */
-  --blog-side-padding: 12px;
+  --blog-side-padding: 10px;
 
   /* スマホでの左右の余白です。 */
-  --blog-mobile-side-padding: 16px;
+  --blog-mobile-side-padding: 14px;
 }
