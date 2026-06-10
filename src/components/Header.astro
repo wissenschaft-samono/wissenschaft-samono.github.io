@@ -19,25 +19,32 @@ import { SITE } from '@/site.config';
 <style>
   .site-header {
     border-bottom: 1px solid var(--line);
-    background: var(--surface);
+    background:
+      linear-gradient(rgba(253, 252, 249, 0.76), rgba(253, 252, 249, 0.9)),
+      var(--blog-header-image, url('/images/header-background.jpg'));
+    background-color: var(--surface);
+    background-position: center;
+    background-size: cover;
   }
 
   .header-inner {
-    padding: 2rem 0 1.1rem;
+    padding: 3.4rem 0 1.4rem;
   }
 
   .site-title {
     color: var(--text);
-    font-size: clamp(1.6rem, 5vw, 2.35rem);
+    font-size: clamp(2rem, 6vw, 3.2rem);
     font-weight: 700;
     line-height: 1.2;
     text-decoration: none;
+    text-shadow: 0 1px 18px rgba(253, 252, 249, 0.85);
   }
 
   p {
     margin: 0.35rem 0 1rem;
     color: var(--muted);
     font-size: 0.95rem;
+    text-shadow: 0 1px 14px rgba(253, 252, 249, 0.9);
   }
 
   nav {
@@ -46,5 +53,15 @@ import { SITE } from '@/site.config';
     gap: 0.4rem 1.1rem;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 0.9rem;
+  }
+
+  nav a {
+    text-shadow: 0 1px 12px rgba(253, 252, 249, 0.9);
+  }
+
+  @media (max-width: 899px) {
+    .header-inner {
+      padding: 2.4rem 0 1.2rem;
+    }
   }
 </style>
