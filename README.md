@@ -60,7 +60,7 @@ public/images/header-background.jpg
 
 画像を差し替えて GitHub に送ると、ヘッダー背景写真が変わります。写真は自分で撮ったもの、または公開してよいものだけを使ってください。
 
-ブログのアイコンは `public/favicon.svg` です。初期状態では、湯気のある風呂桶風の仮アイコンにしています。
+ブログのアイコンは `public/favicon.png` です。今は写真をもとにした、落ち着いた紫のピクセルアート風アイコンにしています。スマホでホーム画面に保存される場合は `public/apple-touch-icon.png` が使われます。
 
 ユーザーサイトとして公開する場合、リポジトリ名は `<github-user>.github.io` にします。プロジェクトサイトとして公開する場合、`repositoryName` を `research-blog` などに変更すると、Astro の `base` が `/research-blog` になります。
 
