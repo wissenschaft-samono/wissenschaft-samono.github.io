@@ -35,7 +35,7 @@ draft: false
 脚注も利用できます。[^note]
 
 ```text
-Markdown ファイルを src/content/posts/ に置くと記事として扱われます。
+Markdown ファイルを src/content/blog/ に置くと記事として扱われます。
 ```
 
 ## 参考文献

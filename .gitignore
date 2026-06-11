@@ -4,6 +4,7 @@ dist/
 .npm-cache/
 .tools/
 .DS_Store
+.obsidian/
 npm-debug.log*
 pnpm-lock.yaml
 yarn.lock
