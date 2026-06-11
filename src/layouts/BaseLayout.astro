@@ -15,6 +15,7 @@ interface Props {
 const pageTitle = Astro.props.title ? `${Astro.props.title} | ${SITE.title}` : SITE.title;
 const description = Astro.props.description ?? SITE.description;
 const canonical = Astro.props.canonical ?? new URL(Astro.url.pathname, SITE.url).toString();
+const hasCustomSidebar = Astro.slots.has('sidebar');
 ---
 
 <!doctype html>
@@ -40,7 +41,7 @@ const canonical = Astro.props.canonical ?? new URL(Astro.url.pathname, SITE.url)
       <div class="content-column">
         <slot />
       </div>
-      <Sidebar />
+      {hasCustomSidebar ? <slot name="sidebar" /> : <Sidebar />}
     </main>
     <Footer />
   </body>

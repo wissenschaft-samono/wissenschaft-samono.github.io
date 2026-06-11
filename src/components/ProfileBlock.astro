@@ -1,0 +1,30 @@
+---
+import { SITE } from '@/site.config';
+---
+
+<section class="profile-block">
+  <h2>Profile</h2>
+  <p><strong>{SITE.author}</strong></p>
+  <p>{SITE.description}</p>
+  <p><a href="/about/">About this site</a></p>
+</section>
+
+<style>
+  .profile-block {
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  h2 {
+    margin: 0 0 0.55rem;
+    color: var(--text);
+    font-size: 0.95rem;
+    letter-spacing: 0;
+  }
+
+  p {
+    margin: 0.35rem 0;
+  }
+</style>

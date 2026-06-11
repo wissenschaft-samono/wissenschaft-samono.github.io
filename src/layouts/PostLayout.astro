@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
+import ProfileBlock from '@/components/ProfileBlock.astro';
 import PostMeta from '@/components/PostMeta.astro';
 
 interface Props {
@@ -13,6 +14,11 @@ const { post, previousPost, nextPost } = Astro.props;
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description} canonical={post.data.canonicalUrl}>
+  <aside class="side-footnotes" aria-label="脚注" data-side-footnotes slot="sidebar">
+    <h2>Footnotes</h2>
+    <ol data-side-footnotes-list></ol>
+  </aside>
+
   <article class="post">
     <header>
       <h1 class="page-title">{post.data.title}</h1>
@@ -35,10 +41,80 @@ const { post, previousPost, nextPost } = Astro.props;
       {nextPost ? <a href={`/posts/${nextPost.id}/`}>← {nextPost.data.title}</a> : <span />}
       {previousPost ? <a href={`/posts/${previousPost.id}/`}>{previousPost.data.title} →</a> : <span />}
     </nav>
+
+    <div class="post-profile">
+      <ProfileBlock />
+    </div>
   </article>
+
+  <script>
+    const arrangeSideFootnotes = () => {
+      const desktopQuery = window.matchMedia('(min-width: 900px)');
+      const post = document.querySelector<HTMLElement>('.post');
+      const aside = document.querySelector<HTMLElement>('[data-side-footnotes]');
+      const sideList = aside?.querySelector<HTMLOListElement>('[data-side-footnotes-list]');
+      const source = post?.querySelector<HTMLElement>('.prose section[data-footnotes]');
+
+      if (!post || !aside || !sideList) {
+        return;
+      }
+
+      post.classList.remove('side-footnotes-ready');
+      sideList.replaceChildren();
+      post.style.removeProperty('--side-footnotes-min-height');
+
+      if (!desktopQuery.matches || !source) {
+        return;
+      }
+
+      const sourceItems = Array.from(source.querySelectorAll<HTMLLIElement>('li[id]'));
+
+      if (sourceItems.length === 0) {
+        return;
+      }
+
+      const listTop = sideList.getBoundingClientRect().top;
+      const postTop = post.getBoundingClientRect().top;
+      const minimumGap = 14;
+      let previousBottom = 0;
+
+      for (const sourceItem of sourceItems) {
+        const note = sourceItem.cloneNode(true) as HTMLLIElement;
+        const reference = document.querySelector<HTMLAnchorElement>(
+          `a[href="#${CSS.escape(sourceItem.id)}"]`,
+        );
+        const targetTop = reference
+          ? Math.max(0, reference.getBoundingClientRect().top - listTop)
+          : previousBottom + minimumGap;
+        const marginTop = Math.max(targetTop - previousBottom, previousBottom === 0 ? 0 : minimumGap);
+
+        note.style.marginTop = `${Math.round(marginTop)}px`;
+        sideList.append(note);
+        previousBottom += marginTop + note.getBoundingClientRect().height;
+      }
+
+      const sideFootnotesBottom = sideList.getBoundingClientRect().top - postTop + previousBottom;
+      post.style.setProperty('--side-footnotes-min-height', `${Math.ceil(sideFootnotesBottom)}px`);
+      post.classList.add('side-footnotes-ready');
+    };
+
+    let footnoteResizeTimer = 0;
+    const queueSideFootnotes = () => {
+      window.clearTimeout(footnoteResizeTimer);
+      footnoteResizeTimer = window.setTimeout(arrangeSideFootnotes, 80);
+    };
+
+    window.addEventListener('load', arrangeSideFootnotes);
+    window.addEventListener('resize', queueSideFootnotes);
+    arrangeSideFootnotes();
+  </script>
 </BaseLayout>
 
 <style>
+  .post {
+    min-height: var(--side-footnotes-min-height, auto);
+  }
+
   .lead {
     margin: 1rem 0 1.8rem;
     color: var(--muted);
@@ -73,5 +149,62 @@ const { post, previousPost, nextPost } = Astro.props;
 
   .post-nav a:last-child {
     text-align: right;
+  }
+
+  .post-profile {
+    margin-top: 2.2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .side-footnotes {
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    margin-top: var(--blog-sidebar-offset);
+  }
+
+  .side-footnotes h2 {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .side-footnotes ol {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .side-footnotes :global(li) {
+    padding-left: 0.1rem;
+  }
+
+  .side-footnotes :global(p) {
+    margin: 0;
+  }
+
+  .side-footnotes :global(a[data-footnote-backref]) {
+    display: none;
+  }
+
+  :global(.post.side-footnotes-ready .prose section[data-footnotes]) {
+    display: none;
+  }
+
+  @media (max-width: 899px) {
+    .side-footnotes {
+      display: none;
+    }
+
+    .post-profile {
+      margin-top: 2.5rem;
+      padding: 1.25rem 1rem 0.2rem;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--surface) 72%, var(--bg));
+    }
   }
 </style>

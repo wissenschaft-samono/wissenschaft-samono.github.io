@@ -1,5 +1,5 @@
 ---
-import { SITE } from '@/site.config';
+import ProfileBlock from '@/components/ProfileBlock.astro';
 import { categoryPath, formatDate, getArchiveYears, getCategories, getRecentPosts } from '@/lib/posts';
 
 const recentPosts = await getRecentPosts(10);
@@ -8,12 +8,7 @@ const archiveYears = getArchiveYears(recentPosts);
 ---
 
 <aside class="sidebar" aria-label="サイドバー">
-  <section>
-    <h2>Profile</h2>
-    <p><strong>{SITE.author}</strong></p>
-    <p>{SITE.description}</p>
-    <p><a href="/about/">About this site</a></p>
-  </section>
+  <ProfileBlock />
 
   <section>
     <h2>Recent Entries</h2>
@@ -53,12 +48,14 @@ const archiveYears = getArchiveYears(recentPosts);
     margin-top: var(--blog-sidebar-offset);
   }
 
+  :global(.profile-block),
   section {
     padding: 0 0 1.4rem;
     margin: 0 0 1.4rem;
     border-bottom: 1px solid var(--line);
   }
 
+  :global(.profile-block:last-child),
   section:last-child {
     margin-bottom: 0;
     border-bottom: 0;
