@@ -28,8 +28,8 @@ Astro と Markdown で作る公開研究ブログです。GitHub Pages の無料
   - 副題
 - `astro.config.mjs`
   - リポジトリ名を `wissenschaft-samono.github.io` 以外にする場合の `repositoryName`
-- `src/pages/about.astro`
-  - `CONTACT_LINK_PLACEHOLDER`
+- `src/pages/about.md`
+  - Aboutページの本文
 
 ## 見た目を変える
 
