@@ -12,7 +12,6 @@ const posts = defineCollection({
     category: z.string().min(1),
     tags: z.array(z.string()),
     draft: z.boolean(),
-    relatedWork: z.string().optional(),
     canonicalUrl: z.url().optional(),
   }),
 });

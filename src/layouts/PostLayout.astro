@@ -26,13 +26,6 @@ const { post, previousPost, nextPost } = Astro.props;
       <p class="lead">{post.data.description}</p>
     </header>
 
-    {post.data.relatedWork && (
-      <aside class="related-work" aria-label="この記事と研究成果との関係">
-        <h2>この記事と研究成果との関係</h2>
-        <p>{post.data.relatedWork}</p>
-      </aside>
-    )}
-
     <div class="prose">
       <slot />
     </div>
@@ -120,22 +113,6 @@ const { post, previousPost, nextPost } = Astro.props;
     color: var(--muted);
   }
 
-  .related-work {
-    margin: 1.5rem 0 2rem;
-    padding: 1rem 1.1rem;
-    border: 1px solid var(--line);
-    background: var(--surface);
-  }
-
-  .related-work h2 {
-    margin: 0 0 0.45rem;
-    font-size: 1rem;
-  }
-
-  .related-work p {
-    margin: 0;
-  }
-
   .post-nav {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -170,8 +147,7 @@ const { post, previousPost, nextPost } = Astro.props;
     color: var(--muted);
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
   .side-footnotes ol {

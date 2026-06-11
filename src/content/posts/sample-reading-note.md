@@ -7,7 +7,6 @@ tags:
   - "サンプル"
   - "Markdown"
 draft: false
-relatedWork: "この記事は表示確認用のサンプルであり、既発表成果とは関係ありません。"
 ---
 
 ## 問題意識
