@@ -168,4 +168,12 @@ hr {
     display: block;
     padding-top: 1.4rem;
   }
+
+  [id^='user-content-fnref'] {
+    scroll-margin-top: 34vh;
+  }
+
+  [data-footnotes] li[id^='user-content-fn'] {
+    scroll-margin-top: 34vh;
+  }
 }
