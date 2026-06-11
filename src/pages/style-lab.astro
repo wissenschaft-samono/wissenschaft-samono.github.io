@@ -166,13 +166,13 @@ import '@/styles/global.css';
         font: 17,
         mobileFont: 16,
         lineHeight: 1.9,
-        page: 1340,
-        main: 940,
-        sidebar: 240,
+        page: 1400,
+        main: 1000,
+        sidebar: 300,
         gap: 64,
         offset: 18,
-        sidePadding: 12,
-        mobileSidePadding: 16,
+        sidePadding: 10,
+        mobileSidePadding: 14,
       };
 
       const state = { ...initial };
@@ -246,9 +246,9 @@ import '@/styles/global.css';
 
       function setPreset(name) {
         if (name === 'current') Object.assign(state, initial);
-        if (name === 'wide') Object.assign(state, { page: 1440, main: 1040, sidebar: 220, gap: 72, sidePadding: 8 });
+        if (name === 'wide') Object.assign(state, { page: 1480, main: 1040, sidebar: 320, gap: 72, sidePadding: 8 });
         if (name === 'soft') Object.assign(state, { background: '#fffdf8', muted: '#766f68', link: '#6a527d', border: '#e5ded5', font: 17.5, lineHeight: 1.95 });
-        if (name === 'compact') Object.assign(state, { page: 1360, main: 980, sidebar: 220, gap: 44, sidePadding: 4 });
+        if (name === 'compact') Object.assign(state, { page: 1360, main: 960, sidebar: 280, gap: 44, sidePadding: 4 });
         applyAll();
       }
 
