@@ -1,7 +1,11 @@
 ---
-layout: ../layouts/PageLayout.astro
 title: "About"
 description: "このブログと書き手について。"
+publishedAt: 2026-06-11
+category: "固定ページ"
+tags:
+  - "About"
+draft: true
 ---
 
 「風呂は命の洗濯」は、読書メモ、概念整理、短い試論を公開するための個人ブログです。

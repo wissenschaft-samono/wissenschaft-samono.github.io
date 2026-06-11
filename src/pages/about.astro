@@ -1,0 +1,16 @@
+---
+import { getEntry, render } from 'astro:content';
+import PageLayout from '@/layouts/PageLayout.astro';
+
+const about = await getEntry('posts', 'about');
+
+if (!about) {
+  throw new Error('src/content/blog/about.md が見つかりません。');
+}
+
+const { Content } = await render(about);
+---
+
+<PageLayout frontmatter={about.data}>
+  <Content />
+</PageLayout>

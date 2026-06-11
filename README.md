@@ -28,7 +28,7 @@ Astro と Markdown で作る公開研究ブログです。GitHub Pages の無料
   - 副題
 - `astro.config.mjs`
   - リポジトリ名を `wissenschaft-samono.github.io` 以外にする場合の `repositoryName`
-- `src/pages/about.md`
+- `src/content/blog/about.md`
   - Aboutページの本文
 
 ## 見た目を変える
@@ -99,6 +99,8 @@ npm run preview
 10. commit / push する。
 
 記事を書くときは、`templates/post-template.md` をコピーして使えます。コピー先は `src/content/blog/` です。コピーしたファイル名は、英数字とハイフンだけにしてください。
+
+`src/content/blog/about.md` はAboutページ用、`src/content/blog/post-template.md` はObsidianで使う記事テンプレート用です。この2つは記事一覧には出ません。
 
 例:
 

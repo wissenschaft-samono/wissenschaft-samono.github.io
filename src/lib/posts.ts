@@ -3,10 +3,12 @@ import { getCollection } from 'astro:content';
 export type Post = Awaited<ReturnType<typeof getAllPosts>>[number];
 
 export const isProduction = import.meta.env.PROD;
+const nonPostIds = new Set(['about', 'post-template']);
 
 export async function getAllPosts() {
   const posts = await getCollection('posts');
   return posts
+    .filter((post) => !nonPostIds.has(post.id))
     .filter((post) => !isProduction || !post.data.draft)
     .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 }
