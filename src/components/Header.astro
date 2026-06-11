@@ -35,11 +35,13 @@ import { SITE } from '@/site.config';
 
   .site-title {
     color: var(--text);
+    display: inline-block;
     font-size: clamp(2rem, 6vw, 3.2rem);
     font-weight: 700;
     line-height: 1.2;
     text-decoration: none;
     text-shadow: 0 1px 18px rgba(253, 252, 249, 0.85);
+    transform: translateY(0.45rem);
   }
 
   p {
@@ -47,6 +49,7 @@ import { SITE } from '@/site.config';
     color: var(--muted);
     font-size: 0.95rem;
     text-shadow: 0 1px 14px rgba(253, 252, 249, 0.9);
+    transform: translateY(0.45rem);
   }
 
   nav {
@@ -68,10 +71,15 @@ import { SITE } from '@/site.config';
       padding: 3.8rem 0 1.4rem;
     }
 
+    .site-title {
+      transform: translateY(0.34rem);
+    }
+
     p {
       max-width: 28rem;
       font-size: 0.86rem;
       line-height: 1.55;
+      transform: translateY(0.34rem);
     }
 
     nav {
